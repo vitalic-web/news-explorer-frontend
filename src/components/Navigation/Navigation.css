@@ -1,0 +1,44 @@
+.Navigation {
+  font-family: 'Roboto', Arial, sans-serif;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 24px;
+  display: flex;
+  align-items: center;
+  margin: 0 104px 0 0;
+}
+
+.Navigation__main {
+  text-decoration: none;
+  color: white;
+}
+
+.Navigation__saved-articles {
+  margin: 0 34px;
+  text-decoration: none;
+  color: white;
+}
+
+.Navigation__auth {
+  background-color: transparent;
+  border: 1px solid white;
+  border-radius: 100px;
+  color: white;
+  padding: 12px 19px;
+  display: flex;
+  align-items: center;
+  font: inherit;
+}
+
+.Navigation__auth:hover {
+  cursor: pointer;
+}
+
+.Navigation__auth-name {
+  margin: 0;
+}
+
+.Navigation__logout {
+  width: 100%;
+  margin-left: 10px;
+}
