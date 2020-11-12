@@ -3,7 +3,7 @@
   flex-direction: column;
   width: 100%;
   position: relative;
-  color: white;
+  color: black;
 }
 
 .Main__search {
@@ -25,6 +25,7 @@
   font-size: 60px;
   line-height: 64px;
   width: calc(100% * 608/1440);
+  color: white;
 }
 
 .Main__subtitle {
@@ -37,6 +38,7 @@
   line-height: 24px;
   width: calc(100% * 545/1440);
   margin: 0;
+  color: white;
 }
 
 .Main__search-result {
@@ -68,4 +70,9 @@
   font-weight: 500;
   font-size: 18px;
   line-height: 24px;
+  outline: none;
+}
+
+.Main__search-button {
+  cursor: pointer;
 }

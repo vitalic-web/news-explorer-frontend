@@ -51,4 +51,9 @@
   right: -3px;
   top: 0;
   height: 64px;
+  outline: none;
+}
+
+.SearchForm__button:hover {
+  cursor: pointer;
 }

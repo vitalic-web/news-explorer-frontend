@@ -28,6 +28,7 @@
   display: flex;
   align-items: center;
   font: inherit;
+  outline: none;
 }
 
 .Navigation__auth:hover {
