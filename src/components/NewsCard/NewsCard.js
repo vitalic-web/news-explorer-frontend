@@ -1,6 +1,9 @@
-import NewsCardBookmark from '../../images/NewsCard__bookmark.svg';
+import { useState } from 'react';
 
 function NewsCard(props) {
+  const [click, setClick] = useState(false);
+  const toggleBookmark = () => click ? setClick(false) : setClick(true);
+
   return (
     <div className="NewsCard">
       <div className="NewsCard__content">
@@ -11,7 +14,7 @@ function NewsCard(props) {
       </div>
       <a className="NewsCard__source" href={props.sourceLink} rel="noreferrer" target="_blank">{props.sourceName}</a>
       <div className="NewsCard__bookmark">
-        <img className="NewsCard__bookmark-image" src={NewsCardBookmark} alt="bookmark"/>
+        <div onClick={toggleBookmark} className={`NewsCard__bookmark-image ${click && 'NewsCard__bookmark-image_checked'}`}/>
       </div>
       <button className="NewsCard__bookmark-button">Войдите, чтобы сохранять статьи</button>
     </div>

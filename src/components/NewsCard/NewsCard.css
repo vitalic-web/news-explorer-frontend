@@ -79,11 +79,20 @@
 .NewsCard__bookmark-image {
   width: 14px;
   height: 19px;
+  background-image: url(../../images/NewsCard__bookmark.svg);
 }
 
 .NewsCard__bookmark-image:hover {
   filter: brightness(0%);
   cursor: pointer;
+}
+
+.NewsCard__bookmark-image.NewsCard__bookmark-image_checked {
+  background-image: url(../../images/NewsCard__bookmark_checked.svg);
+}
+
+.NewsCard__bookmark-image.NewsCard__bookmark-image_checked:hover {
+  filter: none;
 }
 
 .NewsCard__bookmark-button {

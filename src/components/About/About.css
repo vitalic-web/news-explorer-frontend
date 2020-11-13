@@ -32,3 +32,7 @@
   font-size: 18px;
   line-height: 24px;
 }
+
+.About__description-text:nth-of-type(1) {
+  margin: 0 0 24px 0;
+}
