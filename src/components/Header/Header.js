@@ -1,11 +1,11 @@
+import './Header.css';
 import Navigation from '../Navigation/Navigation';
-import '../Navigation/Navigation.css';
 
-function Header() {
+function Header(props) {
   return (
-    <header className="Header">
+    <header className={`Header ${props.saved_news && 'Header_saved-news'}`}>
       <p className="Header__name">NewsExplorer</p>
-      <Navigation />
+      <Navigation saved_news={props.saved_news} />
     </header>
   );
 }

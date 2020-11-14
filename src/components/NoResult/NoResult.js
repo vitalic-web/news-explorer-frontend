@@ -1,3 +1,4 @@
+import './NoResult.css';
 import noResult from '../../images/NoResult.svg';
 
 function NoResult() {

@@ -1,3 +1,4 @@
+import './About.css';
 import catAvatar from '../../images/9cd0ddd9fb4d9d3910ce3b1d19ca7145.jpg';
 
 function About() {

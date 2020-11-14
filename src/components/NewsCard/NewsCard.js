@@ -1,3 +1,4 @@
+import './NewsCard.css';
 import { useState } from 'react';
 
 function NewsCard(props) {

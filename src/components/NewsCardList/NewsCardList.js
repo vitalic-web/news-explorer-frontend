@@ -1,5 +1,5 @@
+import './NewsCardList.css';
 import NewsCard from '../NewsCard/NewsCard';
-import '../NewsCard/NewsCard.css';
 import NewsCardPic1 from '../../images/NewsCard__pic1.png';
 import NewsCardPic2 from '../../images/NewsCard__pic2.png';
 import NewsCardPic3 from '../../images/NewsCard__pic3.png';
@@ -28,7 +28,7 @@ function NewsCardList() {
         link={NewsCardPic3}
         date="2 августа, 2019"
         title="«Первозданная тайга»: новый фотопроект Игоря Шпиленка"
-        text="Знаменитый фотограф снимает первозданные леса России, чтобы рассказать о необходимости их сохранения. В этот раз он отправился в Двинско-Пинежскую тайгу, гдееееееееееее"
+        text="Знаменитый фотограф снимает первозданные леса России, чтобы рассказать о необходимости их сохранения. В этот раз он отправился в Двинско-Пинежскую тайгу, где dfgdgdfgdfg dfgdf gdfgdfd gdgdfgdf dgdgdf dfgdfg  dfgdf g"
         sourceName="РИА"
         sourceLink="https://ria.ru/"
       />

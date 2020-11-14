@@ -1,3 +1,4 @@
+import './Footer.css';
 import GHlogo from '../../images/Github-icon.svg';
 import FBlogo from '../../images/FB-icon.svg';
 

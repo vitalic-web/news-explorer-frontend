@@ -13,10 +13,18 @@
   color: white;
 }
 
+.Navigation__main.Navigation__main_saved-news {
+  color: black;
+}
+
 .Navigation__saved-articles {
   margin: 0 34px;
   text-decoration: none;
   color: white;
+}
+
+.Navigation__saved-articles.Navigation__saved-articles_saved-news {
+  color: black;
 }
 
 .Navigation__auth {
@@ -29,6 +37,11 @@
   align-items: center;
   font: inherit;
   outline: none;
+}
+
+.Navigation__auth.Navigation__auth_saved-news {
+  border: 1px solid black;
+  color: black;
 }
 
 .Navigation__auth:hover {
