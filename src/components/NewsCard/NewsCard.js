@@ -14,10 +14,17 @@ function NewsCard(props) {
         <p className="NewsCard__text">{props.text}</p>
       </div>
       <a className="NewsCard__source" href={props.sourceLink} rel="noreferrer" target="_blank">{props.sourceName}</a>
-      <div className="NewsCard__bookmark">
-        <div onClick={toggleBookmark} className={`NewsCard__bookmark-image ${click && 'NewsCard__bookmark-image_checked'}`}/>
-      </div>
-      <button className="NewsCard__bookmark-button">Войдите, чтобы сохранять статьи</button>
+      {props.isLogin
+        ? <div className="NewsCard__bookmark">
+            <div className="NewsCard__delete-image" />
+            <button className="NewsCard__bookmark-button NewsCard__bookmark-button_logged-in">Убрать из сохранённых</button>
+            <button className="NewsCard__bookmark-button NewsCard__bookmark-button_tagged">{props.tag}</button>
+          </div>
+        : <div className="NewsCard__bookmark">
+            <div onClick={toggleBookmark} className={`NewsCard__bookmark-image ${click && 'NewsCard__bookmark-image_checked'}`} />
+            <button className="NewsCard__bookmark-button">Войдите, чтобы сохранять статьи</button>
+          </div>
+      }
     </div>
   );
 }

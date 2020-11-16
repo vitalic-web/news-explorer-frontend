@@ -2,12 +2,13 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 32px 104px 26px;
+  height: 80px;
+  width: 100%;
 }
 
 .Footer__copyright {
   color: #B6BCBF;
-  margin: 0;
+  margin: 0 0 0 104px;
   font-family: 'Roboto';
   font-weight: normal;
   font-size: 16px;
@@ -38,6 +39,10 @@
 
 .Footer__navigation-link:nth-of-type(3) {
   margin-right: 28px;
+}
+
+.Footer__navigation-link:nth-of-type(4) {
+  margin-right: 104px;
 }
 
 .Footer__navigation-link:hover {

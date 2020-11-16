@@ -1,6 +1,7 @@
 .About {
   display: flex;
-  padding: 80px 0 80px 104px;
+  width: 1232px;
+  padding: 80px 0;
 }
 
 .About__avatar {

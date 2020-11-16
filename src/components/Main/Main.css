@@ -4,6 +4,7 @@
   width: 100%;
   position: relative;
   color: black;
+  align-items: center;
 }
 
 .Main__search {
@@ -51,16 +52,16 @@
 }
 
 .Main__search-result-title {
-  margin: 80px 0 64px 104px;
-  align-self: flex-start;
+  margin: 80px 0 0 0;
   font-family: 'Roboto Slab';
   font-weight: normal;
   font-size: 40px;
   line-height: 46px;
+  width: 1232px;
 }
 
 .Main__search-button {
-  margin: 64px 0 80px;
+  margin: 0 0 80px 0;
   border: none;
   background-color: white;
   width: 288px;

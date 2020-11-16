@@ -1,10 +1,17 @@
 .SavedNewsHeader {
   width: 100%;
-  border: 1px solid red;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.SavedNewsHeader__text {
+  width: 1232px;
 }
 
 .SavedNewsHeader__title {
-  margin: 40px 0 0 104px;
+  margin: 40px 0 0 0;
   font-family: 'Roboto';
   font-weight: normal;
   font-size: 18px;
@@ -14,7 +21,7 @@
 
 .SavedNewsHeader__main-title {
   width: 530px;
-  margin: 28px 0 0 104px;
+  margin: 28px 0 0 0;
   font-family: 'Roboto Slab';
   font-weight: normal;
   font-size: 40px;
@@ -22,7 +29,7 @@
 }
 
 .SavedNewsHeader__tags {
-  margin: 30px 0 56px 104px;
+  margin: 30px 0 56px 0;
   font-family: 'Roboto';
   font-weight: normal;
   font-size: 18px;
