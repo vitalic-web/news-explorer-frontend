@@ -6,11 +6,13 @@
   display: flex;
   align-items: center;
   margin: 0 104px 0 0;
+  position: relative;
 }
 
 .Navigation__main {
   text-decoration: none;
   color: white;
+  margin: 0 32px 0 0;
 }
 
 .Navigation__main.Navigation__main_saved-news {
@@ -25,6 +27,21 @@
 
 .Navigation__saved-articles.Navigation__saved-articles_saved-news {
   color: black;
+}
+
+.Navigation__check-line {
+  position: absolute;
+  width: 70px;
+  height: 3px;
+  background-color:white;
+  bottom: -16px;
+  right: 573px;
+}
+
+.Navigation__check-line.Navigation__check-line_saved-news {
+  width: 178px;
+  background-color: black;
+  right: 151px;
 }
 
 .Navigation__auth {

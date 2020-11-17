@@ -1,3 +1,4 @@
+import './App.css';
 import { Switch, Route } from 'react-router-dom';
 import Main from '../Main/Main';
 import SavedNews from '../SavedNews/SavedNews';

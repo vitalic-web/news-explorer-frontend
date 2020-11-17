@@ -5,6 +5,7 @@
   position: relative;
   color: black;
   align-items: center;
+  overflow-anchor: none;
 }
 
 .Main__search {
@@ -74,6 +75,7 @@
   outline: none;
 }
 
-.Main__search-button {
+.Main__search-button:hover {
   cursor: pointer;
+  opacity: 0.7;
 }

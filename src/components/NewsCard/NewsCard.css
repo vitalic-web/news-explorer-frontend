@@ -1,4 +1,6 @@
 .NewsCard {
+  text-decoration: none;
+  color: black;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -17,7 +19,10 @@
 }
 
 .NewsCard__image {
-  width: 100%;
+  width: 400px;
+  max-width: 400px;
+  height: 272px;
+  object-fit: cover;
 }
 
 .NewsCard__date {
@@ -57,7 +62,6 @@
 }
 
 .NewsCard__source {
-  text-decoration: none;
   color: #B6BCBF;
   font-family: 'Roboto Slab';
   font-weight: bold;
@@ -107,14 +111,19 @@
   left: -312px;
   width: auto;
   padding: 0 12px;
+  outline: none;
+}
+
+.NewsCard__bookmark-button_tagged.NewsCard__bookmark-button_tagged:hover {
+  cursor: pointer;
 }
 
 .NewsCard__bookmark-image {
-  width: 14px;
-  height: 19px;
+  width: 40px;
+  height: 40px;
   background-image: url(../../images/NewsCard__bookmark.svg);
   background-repeat: no-repeat;
-  background-size: cover;
+  background-position: center;
 }
 
 .NewsCard__bookmark-image:hover {
@@ -134,19 +143,19 @@
   filter: none;
 }
 
-.NewsCard__delete-image {
-  width: 18px;
-  height: 19px;
+.NewsCard__bookmark-delete-image {
+  width: 40px;
+  height: 40px;
   background-image: url(../../images/NewsCard__delete.svg);
   background-repeat: no-repeat;
-  background-size: cover;
+  background-position: center;
 }
 
-.NewsCard__delete-image:hover {
+.NewsCard__bookmark-delete-image:hover {
   filter: brightness(0%);
   cursor: pointer;
 }
 
-.NewsCard__delete-image:hover + .NewsCard__bookmark-button {
+.NewsCard__bookmark-delete-image:hover + .NewsCard__bookmark-button {
   visibility: visible;
 }

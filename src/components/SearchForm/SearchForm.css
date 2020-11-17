@@ -56,4 +56,5 @@
 
 .SearchForm__button:hover {
   cursor: pointer;
+  background-color: #347EFF;
 }
