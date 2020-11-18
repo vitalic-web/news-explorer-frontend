@@ -1,10 +1,10 @@
 import './Main.css';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Header from '../Header/Header';
 import SearchForm from '../SearchForm/SearchForm';
 import NewsCardList from '../NewsCardList/NewsCardList';
 import About from '../About/About';
-import PopupWithAuth from '../PopupWithAuth/PopupWithAuth';
+import Popup from '../Popup/Popup';
 
 import NewsCardPic1 from '../../images/NewsCard__pic1.png';
 import NewsCardPic2 from '../../images/NewsCard__pic2.png';
@@ -70,12 +70,40 @@ function Main() {
     },]);
   };
 
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
+
+  const openPopup = () => setIsOpen(true);
+  const closePopup = () => setIsOpen(false);
+
+  useEffect(() => {
+    function handleOverlayClose(evt) {
+      if (evt.target.classList.contains('Popup_active')) {
+        closePopup();
+      }
+    }
+
+    function handleEscClose(evt) {
+      if (evt.key === "Escape") {
+        closePopup();
+      }
+    }
+
+    document.addEventListener('click', handleOverlayClose);
+    document.addEventListener('keydown', handleEscClose);
+
+    return () => {
+      document.removeEventListener('click', handleOverlayClose);
+      document.removeEventListener('keydown', handleEscClose);
+    }
+  })
+
+  // сделать вывод по три новости
+  // сделать вывод текущей даты в нужном формате
 
   return (
     <main className="Main">
       <div className="Main__search">
-        <Header />
+        <Header open={openPopup} />
         <h1 className="Main__title">Что творится в мире?</h1>
         <h2 className="Main__subtitle">Находите самые свежие статьи на любую тему и сохраняйте в своём личном кабинете.</h2>
         <SearchForm />
@@ -85,7 +113,7 @@ function Main() {
         <NewsCardList articles={searchResultMain} isLogin={false} />
         <button className="Main__search-button" onClick={addMoreResults}>Показать еще</button>
       </div>
-      <PopupWithAuth isOpen={isOpen} />
+      <Popup isOpen={isOpen} onClose={closePopup} />
       <About />
       {/* <NoResult /> */}
       {/* <Preloader /> */}

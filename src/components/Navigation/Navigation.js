@@ -10,7 +10,7 @@ function Navigation(props) {
         Главная
       </a>
       {!props.saved_news &&
-        <button className={`Navigation__auth ${props.saved_news && 'Navigation__auth_saved-news'}`}>
+        <button className={`Navigation__auth ${props.saved_news && 'Navigation__auth_saved-news'}`} onClick={props.open}>
           <p className="Navigation__auth-name">Авторизоваться</p>
         </button>
       }
