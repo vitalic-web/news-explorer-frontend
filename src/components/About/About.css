@@ -1,6 +1,6 @@
 .About {
   display: flex;
-  width: 1232px;
+  width: calc(100% * 1232 / 1440);
   padding: 80px 0;
 }
 

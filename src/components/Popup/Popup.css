@@ -34,6 +34,10 @@
   align-self: center;
 }
 
+.Popup__container.Popup__container_hidden {
+  visibility: hidden;
+}
+
 .Popup__save-button {
   width: 358px;
   max-width: 358px;
@@ -71,6 +75,10 @@
   font-weight: 900;
   font-size: 24px;
   line-height: 28px;
+}
+
+.Popup__title.Popup__title_successful {
+  margin: 43px 0 14px;
 }
 
 .Popup__close-icon {
@@ -159,4 +167,15 @@
 
 .Popup__auth-link:hover {
   cursor: pointer;
+}
+
+.Popup__success-login {
+  width: 358px;
+  max-width: 358px;
+  margin: 0 0 51px 0;
+  font-family: Inter;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 22px;
+  color: #2F71E5;
 }

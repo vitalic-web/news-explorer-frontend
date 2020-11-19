@@ -1,7 +1,22 @@
 .NewsCardList {
   display: grid;
-  grid-template-columns: repeat(auto-fill, 400px);
+  grid-template-columns: repeat(3, 1fr);
   grid-gap: 16px;
-  width: 1232px;
-  padding: 62px 0;
+  width: calc(100% * 1232 / 1440);
+  margin: 62px 0;
+}
+
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+  .NewsCardList {
+    width: calc(100% * 688/768);
+    grid-gap: 8px;
+  }
+}
+
+@media screen and (min-width: 320px) and (max-width: 767px) {
+  .NewsCardList {
+    width: calc(100vw * 288/320);
+    grid-template-columns: 1fr;
+    grid-gap: 10px;
+  }
 }

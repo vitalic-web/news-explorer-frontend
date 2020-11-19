@@ -58,7 +58,7 @@
   font-weight: normal;
   font-size: 40px;
   line-height: 46px;
-  width: 1232px;
+  width: calc(100% * 1232 / 1440);
 }
 
 .Main__search-button {
