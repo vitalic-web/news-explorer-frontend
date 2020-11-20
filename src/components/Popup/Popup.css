@@ -179,3 +179,7 @@
   line-height: 22px;
   color: #2F71E5;
 }
+
+.Popup__success-login:hover {
+  cursor: pointer;
+}

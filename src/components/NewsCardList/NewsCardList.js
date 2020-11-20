@@ -14,7 +14,6 @@ function NewsCardList(props) {
           sourceName={article.sourceName}
           sourceLink={article.sourceLink}
           tag={article.tag}
-          isLogin={props.isLogin}
         />
       )}
     </div>

@@ -4,7 +4,9 @@ import catAvatar from '../../images/9cd0ddd9fb4d9d3910ce3b1d19ca7145.jpg';
 function About() {
   return (
     <div className="About">
-      <img className="About__avatar" src={catAvatar} alt="cat avatar" />
+      <div className="About__avatar">
+        <img className="About__avatar-image" src={catAvatar} alt="cat avatar" />
+      </div>
       <div className="About__description">
         <h3 className="About__description-title">Об авторе</h3>
         <p className="About__description-text">

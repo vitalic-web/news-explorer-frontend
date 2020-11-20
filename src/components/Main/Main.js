@@ -162,7 +162,7 @@ function Main() {
       </div>
       <div className="Main__search-result">
         <p className="Main__search-result-title">Результаты поиска</p>
-        <NewsCardList articles={searchResultMain} isLogin={false} />
+        <NewsCardList articles={searchResultMain} />
         <button className="Main__search-button" onClick={addMoreResults}>Показать еще</button>
       </div>
       <Popup isOpen={isOpen} onClose={closePopup} />
