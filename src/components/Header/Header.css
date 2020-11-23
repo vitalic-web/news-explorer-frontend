@@ -11,9 +11,25 @@
   justify-content: space-between;
 }
 
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+  .Header {
+    height: 66px;
+  }
+}
+
+@media screen and (min-width: 320px) and (max-width: 767px) {
+  .Header {
+    height: 56px;
+  }
+}
+
 .Header.Header_saved-news {
   color: black;
   position: relative;
+}
+
+.Header.Header_burger {
+  background-color: #1A1B22;
 }
 
 .Header__name {
@@ -22,4 +38,17 @@
   font-size: 20px;
   line-height: 24px;
   margin: 0 0 0 104px;
+}
+
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+  .Header__name {
+    margin: 0 0 0 40px;
+  }
+}
+
+@media screen and (min-width: 320px) and (max-width: 767px) {
+  .Header__name {
+    margin: 0 0 0 16px;
+    font-size: 16px;
+  }
 }

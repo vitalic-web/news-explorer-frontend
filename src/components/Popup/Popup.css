@@ -15,6 +15,12 @@
   -moz-transition: all 0.7s;
 }
 
+@media screen and (min-width: 320px) and (max-width: 767px) {
+  .Popup {
+    min-width: 100vw;
+  }
+}
+
 .Popup.Popup_active {
   display: flex;
   visibility: visible;
@@ -23,7 +29,7 @@
 }
 
 .Popup__container {
-  width: 430px;
+  width: calc(430/1440 * 100%);
   max-width: 430px;
   background-color: white;
   border-radius: 10px;
@@ -34,19 +40,32 @@
   align-self: center;
 }
 
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+  .Popup__container {
+    width: calc(430/768 * 100%);
+  }
+}
+
+@media screen and (min-width: 320px) and (max-width: 767px) {
+  .Popup__container {
+    width: 100vw;
+    height: 100vh;
+    top: 78px;
+  }
+}
+
 .Popup__container.Popup__container_hidden {
   visibility: hidden;
 }
 
 .Popup__save-button {
-  width: 358px;
-  max-width: 358px;
+  width: calc(358/430 * 100%);
   background-color: #2F71E5;
   color: white;
   border: none;
   border-radius: 100px;
   font-size: 18px;
-  line-height: 22px;
+  line-height: 24px;
   padding: 15px 0 18px;
   margin: 8px 0 16px;
   outline: none;
@@ -69,8 +88,7 @@
 .Popup__title {
   color: black;
   margin: 34px 0 22px;
-  width: 358px;
-  max-width: 358px;
+  width: calc(358/430 * 100%);
   font-family: 'Roboto';
   font-weight: 900;
   font-size: 24px;
@@ -95,6 +113,15 @@
   background-repeat: no-repeat;
 }
 
+@media screen and (min-width: 320px) and (max-width: 767px) {
+  .Popup__close-icon {
+    top: -50px;
+    right: 10px;
+    width: 24px;
+    padding-bottom: 24px;
+  }
+}
+
 .Popup__close-icon:hover {
   opacity: 0.6;
   cursor: pointer;
@@ -102,6 +129,10 @@
 
 .Popup__input-area {
   position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .Popup__input {
@@ -109,8 +140,7 @@
   font-size: 14px;
   line-height: 17px;
   border-bottom: 1px solid rgba(00, 00, 00, .2);
-  width: 358px;
-  max-width: 358px;
+  width: calc(358/430 * 100%);
   padding: 0 0 10px;
   margin: 0 0 31px;
   outline: none;
@@ -126,8 +156,7 @@
 }
 
 .Popup__input-label {
-  width: 358px;
-  max-width: 358px;
+  width: calc(358/430 * 100%);
   margin: 0 0 9px 0;
   color: #2F71E5;
   font-family: Inter;
@@ -141,16 +170,15 @@
   font-size: 12px;
   line-height: 15px;
   color: red;
-  width: 358px;
-  max-width: 358px;
+  width: calc(358/430 * 100%);
   position: absolute;
   top: 32px;
-  left: 0;
+  left: calc(36/430 * 100%);
 }
 
 .Popup__input-error-message.Popup__input-error-message_regisrate {
   top: 46px;
-  left: 106px;
+  text-align: center;
 }
 
 .Popup__auth {
@@ -170,8 +198,7 @@
 }
 
 .Popup__success-login {
-  width: 358px;
-  max-width: 358px;
+  width: calc(358/430 * 100%);
   margin: 0 0 51px 0;
   font-family: Inter;
   font-weight: normal;

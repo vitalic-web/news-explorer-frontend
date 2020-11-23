@@ -1,13 +1,24 @@
 .SearchForm {
-  position: absolute;
-  top: 432px;
-  left: calc(100% * 416/1440);
-  width: calc(100% * 608/1440);
+  position: relative;
+  width: 100%;
   height: 64px;
   border-radius: 100px;
   display: flex;
   justify-content: space-between;
   border: none;
+}
+
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+  .SearchForm {
+    height: 56px;
+  }
+}
+
+@media screen and (min-width: 320px) and (max-width: 767px) {
+  .SearchForm {
+    flex-direction: column;
+    height: auto;
+  }
 }
 
 .SearchForm__input {
@@ -20,6 +31,14 @@
   font-weight: 400;
   border-radius: 100px;
   outline: none;
+}
+
+@media screen and (min-width: 320px) and (max-width: 767px) {
+  .SearchForm__input {
+    width: auto;
+    height: 56px;
+    margin: 0 0 16px;
+  }
 }
 
 @-moz-document url-prefix() {
@@ -52,6 +71,20 @@
   top: 0;
   height: 64px;
   outline: none;
+}
+
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+  .SearchForm__button {
+    height: 56px;
+  }
+}
+
+@media screen and (min-width: 320px) and (max-width: 767px) {
+  .SearchForm__button {
+    position: relative;
+    width: auto;
+    height: 56px;
+  }
 }
 
 .SearchForm__button:hover {

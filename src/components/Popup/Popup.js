@@ -39,10 +39,19 @@ function Popup(props) {
     setValidityName(e.target.validity.valid);
   }
 
+  // очистка валидации
+  const clearValidation = () => {
+    setValidityEmail(false);
+    setValidityPassword(false);
+    setValidityName(false);
+  }
+
   // переключение попапов вход/регистрация, так же очистка инпутов от введенных данных
   const toggleAuth = () => {
     setRegistration(!registration);
     setButtonDisabled(true);
+    clearValidation();
+    setValidationMessage({ email: '', password: '', name: '' });
     setEmail('');
     setPassword('');
     setName('');
@@ -58,6 +67,8 @@ function Popup(props) {
   // скрытие попапа успешной регистрации и показ попапа вход
   const redirectLogin = () => {
     setRegistration(!registration);
+    setButtonDisabled(true);
+    clearValidation();
     setPopupWithForm(true);
     setEmail('');
     setPassword('');
@@ -74,8 +85,7 @@ function Popup(props) {
         setButtonDisabled(false);
       }
     }
-
-  });
+  },);
 
   return (
     <section className={`Popup ${props.isOpen && 'Popup_active'}`}>
@@ -104,7 +114,7 @@ function Popup(props) {
             <label className="Popup__input-label" htmlFor="password">Имя</label>
             <div className="Popup__input-area">
               <input className="Popup__input" onChange={validateName} name="name" type="text" required
-                value={name} minLength="2" maxLength="40" id="name" placeholder="Введите своё имя"  />
+                value={name} minLength="2" maxLength="40" id="name" placeholder="Введите своё имя" />
               <span className="Popup__input-error-message" id="name-input-error">{!validityName && validationMessage.name}</span>
               {sameUser && <span className="Popup__input-error-message Popup__input-error-message_regisrate">Такой пользователь уже есть</span>}
             </div>

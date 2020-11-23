@@ -9,39 +9,54 @@
   position: relative;
 }
 
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+  .Navigation {
+    font-size: 16px;
+    margin: 0 40px 0 0;
+  }
+}
+
 .Navigation__main {
   text-decoration: none;
   color: white;
   margin: 0 32px 0 0;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  border-bottom: 3px solid white;
+}
+
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+  .Navigation__main {
+    margin: 0 16px 0 0;
+    height: 66px;
+  }
 }
 
 .Navigation__main.Navigation__main_saved-news {
   color: black;
+  border-bottom: none;
 }
 
 .Navigation__saved-articles {
   margin: 0 34px;
   text-decoration: none;
   color: white;
+  height: 80px;
+  display: flex;
+  align-items: center;
+}
+
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+  .Navigation__saved-articles {
+    margin: 0 16px;
+    height: 66px;
+  }
 }
 
 .Navigation__saved-articles.Navigation__saved-articles_saved-news {
   color: black;
-}
-
-.Navigation__check-line {
-  position: absolute;
-  width: 70px;
-  height: 3px;
-  background-color:white;
-  bottom: -16px;
-  right: 573px;
-}
-
-.Navigation__check-line.Navigation__check-line_saved-news {
-  width: 178px;
-  background-color: black;
-  right: 151px;
+  border-bottom: 3px solid black;
 }
 
 .Navigation__auth {
@@ -72,4 +87,55 @@
 .Navigation__logout {
   width: 100%;
   margin-left: 10px;
+}
+
+.Navigation__burger-menu-icon {
+  margin: 0 24px 0 0;
+}
+
+.Navigation__burger-menu {
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(00, 00, 00, .5);
+  position: fixed;
+  top: 58px;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0.5s, opacity 0.5s linear;
+  -moz-transition: all 0.7s;
+}
+
+.Navigation__burger-menu.Navigation__burger-menu_active {
+  display: flex;
+  visibility: visible;
+  opacity: 1;
+  -moz-transition: opacity 0.7s;
+}
+
+.Navigation__burger-menu-container {
+  width: 100vw;
+  height: 80vh;
+  background-color: #1A1B22;
+  border-bottom-left-radius: 16px;
+  border-bottom-right-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: fixed;
+  align-self: center;
+  top: 58px;
+}
+
+.Navigation__burger-menu-link {
+  text-decoration: none;
+  color: white;
+  font-family: Roboto;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 56px;
 }

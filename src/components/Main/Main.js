@@ -9,7 +9,6 @@ import Popup from '../Popup/Popup';
 import NewsCardPic1 from '../../images/NewsCard__pic1.png';
 import NewsCardPic2 from '../../images/NewsCard__pic2.png';
 import NewsCardPic3 from '../../images/NewsCard__pic3.png';
-import TestPhoto from '../../images/photo-1605462398512-51e939d2d21d.jpg';
 
 // импорт компонентов "Нет результатов" и "Прелоудер" для проверки
 // добавлены в разметку и закомментированы в конце страницы после компонента "Об авторе"
@@ -154,11 +153,13 @@ function Main() {
 
   return (
     <main className="Main">
-      <div className="Main__search">
+      <div className="Main__search-pic">
         <Header open={openPopup} />
-        <h1 className="Main__title">Что творится в мире?</h1>
-        <h2 className="Main__subtitle">Находите самые свежие статьи на любую тему и сохраняйте в своём личном кабинете.</h2>
-        <SearchForm />
+        <div className="Main__search">
+          <h1 className="Main__title">Что творится в мире?</h1>
+          <h2 className="Main__subtitle">Находите самые свежие статьи на любую тему и сохраняйте в своём личном кабинете.</h2>
+          <SearchForm />
+        </div>
       </div>
       <div className="Main__search-result">
         <p className="Main__search-result-title">Результаты поиска</p>
