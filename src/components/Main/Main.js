@@ -159,7 +159,7 @@ function Main() {
   return (
     <main className="Main">
       <div className="Main__search-pic">
-        <Header open={openPopup} userName="Васёк" />
+        <Header open={openPopup} />
         <div className="Main__search">
           <h1 className="Main__title">Что творится в мире?</h1>
           <h2 className="Main__subtitle">Находите самые свежие статьи на любую тему и сохраняйте в своём личном кабинете.</h2>

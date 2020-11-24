@@ -14,7 +14,7 @@
 .Footer__copyright {
   color: #B6BCBF;
   margin: 32px 0 26px 104px;
-  font-family: 'Roboto';
+  font-family: 'Roboto', Arial, sans-serif;
   font-weight: normal;
   font-size: 16px;
   line-height: 22px;
@@ -60,7 +60,7 @@
 .Footer__navigation-link {
   color: black;
   text-decoration: none;
-  font-family: 'Roboto';
+  font-family: 'Roboto', Arial, sans-serif;
   font-weight: normal;
   font-size: 18px;
   line-height: 24px;

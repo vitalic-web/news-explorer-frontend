@@ -44,42 +44,55 @@ function Navigation(props) {
           <section className={`Navigation__burger-menu ${burgerMenu && 'Navigation__burger-menu_active'}`}>
             <div className="Navigation__burger-menu-container">
               <a className="Navigation__burger-menu-link" href="/">Главная</a>
-              <a className="Navigation__burger-menu-link" href="/saved-news">Сохранённые статьи</a>
+
               {savedArticles
               ?
+              <>
+              <a className="Navigation__burger-menu-link" href="/saved-news">Сохранённые статьи</a>
               <button className="Navigation__auth Navigation__auth_mobile">
-                <p className="Navigation__auth-name Navigation__auth-name_mobile">{props.userName}</p>
+                {props.userName}
                 <img className="Navigation__logout Navigation__logout_mobile" src={logoutIcon} alt="Иконка выхода" />
               </button>
+              </>
+
               :
               <button className="Navigation__auth Navigation__auth_mobile" onClick={props.open}>
-                <p className="Navigation__auth-name Navigation__auth-name_mobile">Авторизоваться</p>
+                Авторизоваться
               </button>
               }
             </div>
           </section>
         </nav>
         :
-        <nav className="Navigation">
-          <a className={`Navigation__main ${savedArticles && 'Navigation__main_saved-news'}`} href="/">
-            Главная
-          </a>
-          {!savedArticles &&
-            <button className={`Navigation__auth ${savedArticles && 'Navigation__auth_saved-news'}`} onClick={props.open}>
-              <p className="Navigation__auth-name">Авторизоваться</p>
-            </button>
-          }
-          <a className={`Navigation__saved-articles ${savedArticles && 'Navigation__saved-articles_saved-news'}`}
-            href="/saved-news">
-            Сохраненные статьи
-          </a>
-          <button className={`Navigation__auth ${savedArticles && 'Navigation__auth_saved-news'}`}>
-            <p className="Navigation__auth-name">{props.userName}</p>
-            <img className="Navigation__logout"
-              src={savedArticles ? logoutIconSavedNews : logoutIcon}
+        <>
+          {savedArticles
+          ?
+          <nav className="Navigation">
+            <a className="Navigation__main Navigation__main_saved-news" href="/">
+              Главная
+            </a>
+            <a className={`Navigation__saved-articles ${savedArticles && 'Navigation__saved-articles_saved-news'}`}
+              href="/saved-news">
+              Сохраненные статьи
+            </a>
+            <button className={`Navigation__auth ${savedArticles && 'Navigation__auth_saved-news'}`}>
+             {props.userName}
+             <img className="Navigation__logout"
+              src={logoutIconSavedNews}
               alt="Иконка выхода" />
-          </button>
-        </nav>
+            </button>
+          </nav>
+          :
+          <nav className="Navigation">
+            <a className="Navigation__main" href="/">
+              Главная
+            </a>
+            <button className={`Navigation__auth ${savedArticles && 'Navigation__auth_saved-news'}`} onClick={props.open}>
+              Авторизоваться
+            </button>
+          </nav>
+          }
+        </>
       }
     </>
   );

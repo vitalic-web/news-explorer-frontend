@@ -11,6 +11,11 @@
   background-color: white;
 }
 
+.NewsCard-area {
+  position: relative;
+  display: flex;
+}
+
 .NewsCard__content {
   display: flex;
   flex-direction: column;
@@ -37,7 +42,7 @@
 .NewsCard__date {
   margin: 20px 0 0 24px;
   color: #B6BCBF;
-  font-family: 'Source Sans Pro';
+  font-family: 'Source Sans Pro', Arial, sans-serif;
   font-weight: normal;
   font-size: 18px;
   line-height: 24px;
@@ -58,7 +63,7 @@
 .NewsCard__title {
   margin: 12px 24px 0;
   width: calc(100% * 352/400);
-  font-family: 'Roboto Slab';
+  font-family: 'Roboto Slab', Arial, sans-serif;
   font-weight: normal;
   font-size: 26px;
   line-height: 30px;
@@ -89,7 +94,7 @@
 .NewsCard__text {
   margin: 16px 0 0 24px;
   width: calc(100% * 352/400);
-  font-family: 'Roboto';
+  font-family: 'Roboto', Arial, sans-serif;
   font-weight: normal;
   font-size: 16px;
   line-height: 22px;
@@ -115,7 +120,7 @@
 
 .NewsCard__source {
   color: #B6BCBF;
-  font-family: 'Roboto Slab';
+  font-family: 'Roboto Slab', Arial, sans-serif;
   font-weight: bold;
   font-size: 16px;
   line-height: 20px;
@@ -154,7 +159,7 @@
   width: 182px;
   height: 40px;
   border-radius: 10px;
-  font-family: 'Roboto';
+  font-family: 'Roboto', Arial, sans-serif;
   font-weight: 500;
   font-size: 10px;
   line-height: 12px;
