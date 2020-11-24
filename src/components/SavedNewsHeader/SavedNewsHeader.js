@@ -6,7 +6,7 @@ function SavedNewsHeader(props) {
 
   return (
     <div className="SavedNewsHeader">
-      <Header />
+      <Header userName={props.userName}/>
       <div className="SavedNewsHeader__text">
         <p className="SavedNewsHeader__title">Сохранённые статьи</p>
         <h1 className="SavedNewsHeader__main-title">{props.userName}, у вас {props.articles_amount} сохранённых статей</h1>

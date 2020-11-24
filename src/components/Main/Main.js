@@ -124,8 +124,15 @@ function Main() {
 
   const [isOpen, setIsOpen] = useState(false);
 
-  const openPopup = () => setIsOpen(true);
-  const closePopup = () => setIsOpen(false);
+  const openPopup = () => {
+    setIsOpen(true);
+    document.body.style.overflow = 'hidden';
+  }
+
+  const closePopup = () => {
+    setIsOpen(false);
+    document.body.style.overflow = '';
+  }
 
   useEffect(() => {
     function handleOverlayClose(evt) {
@@ -149,12 +156,10 @@ function Main() {
     }
   })
 
-  // сделать вывод текущей даты в нужном формате
-
   return (
     <main className="Main">
       <div className="Main__search-pic">
-        <Header open={openPopup} />
+        <Header open={openPopup} userName="Васёк" />
         <div className="Main__search">
           <h1 className="Main__title">Что творится в мире?</h1>
           <h2 className="Main__subtitle">Находите самые свежие статьи на любую тему и сохраняйте в своём личном кабинете.</h2>

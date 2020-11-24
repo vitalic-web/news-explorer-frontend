@@ -142,6 +142,7 @@
   font-size: 40px;
   line-height: 46px;
   width: calc(100% * 1232 / 1440);
+  max-width: 1232px;
 }
 
 .Main__search-button {

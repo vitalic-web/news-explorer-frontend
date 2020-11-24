@@ -10,8 +10,8 @@ function Header(props) {
 
   return (
     <header className={`Header ${savedArticles && 'Header_saved-news'} ${burger && 'Header_burger'}`}>
-      <p className="Header__name">NewsExplorer</p>
-      <Navigation open={props.open} burger={setBurger} />
+      <p className={`Header__name ${burger && 'Header__name_burger'}`}>NewsExplorer</p>
+      <Navigation open={props.open} burger={setBurger} userName={props.userName} />
     </header>
   );
 }
