@@ -1,0 +1,30 @@
+.NoResult {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #F5F6F7;
+  width: 100%;
+}
+
+.NoResult__image {
+  margin: 86px 0 40px;
+}
+
+.NoResult__title {
+  margin: 0;
+  font-family: 'Roboto Slab', Arial, sans-serif;
+  font-weight: normal;
+  font-size: 26px;
+  line-height: 30px;
+}
+
+.NoResult__text {
+  margin: 16px 0 80px;
+  font-family: 'Roboto', Arial, sans-serif;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 24px;
+  color: #B6BCBF;
+  width: 340px;
+  text-align: center;
+}
