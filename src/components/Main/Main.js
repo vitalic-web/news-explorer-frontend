@@ -5,6 +5,7 @@ import SearchForm from '../SearchForm/SearchForm';
 import NewsCardList from '../NewsCardList/NewsCardList';
 import About from '../About/About';
 import Popup from '../Popup/Popup';
+import NewsApi from '../../utils/NewsApi';
 
 import NewsCardPic1 from '../../images/NewsCard__pic1.png';
 import NewsCardPic2 from '../../images/NewsCard__pic2.png';
@@ -16,106 +17,137 @@ import NoResult from '../NoResult/NoResult';
 import Preloader from '../Preloader/Preloader';
 
 function Main() {
+
+
+
+
+  // console.log(searchResult);
+
+  // const monthDayDate = new Intl.DateTimeFormat('ru', {
+  //   month: "long",
+  //   day: "numeric",
+  // }).format(currentDate);
+
+  // const newsCardDate = `${monthDayDate}, ${currentDate.getFullYear()}`;
+
+  // console.log(newsCardDate);
+
   // результаты поиска новостей
-  const searchResult = [
-    {
-      _id: 1,
-      link: NewsCardPic1,
-      date: "2 августа, 2019",
-      title: "Национальное достояние – парки",
-      text: "В 2016 году Америка отмечала важный юбилей: сто лет назад здесь начала складываться система национальных парков – охраняемых территорий, где и сегодня каждый может приобщиться к природе.",
-      sourceName: "ЛЕНТА.РУ",
-      sourceLink: "https://lenta.ru/"
-    },
-    {
-      _id: 2,
-      link: NewsCardPic2,
-      date: "2 августа, 2019",
-      title: "Лесные огоньки: история одной фотографии",
-      text: "Фотограф отвлеклась от освещения суровой политической реальности Мексики, чтобы запечатлеть ускользающую красоту одного из местных чудес природы.",
-      sourceName: "МЕДУЗА",
-      sourceLink: "https://meduza.io/"
-    },
-    {
-      _id: 3,
-      link: NewsCardPic3,
-      date: "2 августа, 2019",
-      title: "Первозданная тайга»: новый фотопроект Игоря Шпиленка",
-      text: "Знаменитый фотограф снимает первозданные леса России, чтобы рассказать о необходимости их сохранения. В этот раз он отправился в Двинско-Пинежскую тайгу, где dfgdgdfgdfg dfgdf gdfgdfd gdgdfgdf dgdgdf dfgdfg  dfgdf g",
-      sourceName: "РИА",
-      sourceLink: "https://ria.ru/"
-    },
-    {
-      _id: 4,
-      link: NewsCardPic1,
-      date: "2 августа, 2019",
-      title: "1Национальное достояние – парки",
-      text: "В 2016 году Америка отмечала важный юбилей: сто лет назад здесь начала складываться система национальных парков – охраняемых территорий, где и сегодня каждый может приобщиться к природе.",
-      sourceName: "ЛЕНТА.РУ",
-      sourceLink: "https://lenta.ru/",
-      tag: "Парки"
-    },
-    {
-      _id: 5,
-      link: NewsCardPic2,
-      date: "2 августа, 2019",
-      title: "2Лесные огоньки: история одной фотографии",
-      text: "Фотограф отвлеклась от освещения суровой политической реальности Мексики, чтобы запечатлеть ускользающую красоту одного из местных чудес природы.",
-      sourceName: "МЕДУЗА",
-      sourceLink: "https://meduza.io/",
-      tag: "Фотография"
-    },
-    {
-      _id: 6,
-      link: NewsCardPic1,
-      date: "2 августа, 2019",
-      title: "3Национальное достояние – парки",
-      text: "В 2016 году Америка отмечала важный юбилей: сто лет назад здесь начала складываться система национальных парков – охраняемых территорий, где и сегодня каждый может приобщиться к природе.",
-      sourceName: "ЛЕНТА.РУ",
-      sourceLink: "https://lenta.ru/"
-    },
-    {
-      _id: 7,
-      link: NewsCardPic2,
-      date: "2 августа, 2019",
-      title: "4Лесные огоньки: история одной фотографии",
-      text: "Фотограф отвлеклась от освещения суровой политической реальности Мексики, чтобы запечатлеть ускользающую красоту одного из местных чудес природы.",
-      sourceName: "МЕДУЗА",
-      sourceLink: "https://meduza.io/"
-    },
-    {
-      _id: 8,
-      link: NewsCardPic3,
-      date: "2 августа, 2019",
-      title: "5Первозданная тайга»: новый фотопроект Игоря Шпиленка",
-      text: "Знаменитый фотограф снимает первозданные леса России, чтобы рассказать о необходимости их сохранения. В этот раз он отправился в Двинско-Пинежскую тайгу, где dfgdgdfgdfg dfgdf gdfgdfd gdgdfgdf dgdgdf dfgdfg  dfgdf g",
-      sourceName: "РИА",
-      sourceLink: "https://ria.ru/"
-    },
-    {
-      _id: 9,
-      link: NewsCardPic1,
-      date: "2 августа, 2019",
-      title: "6Национальное достояние – парки",
-      text: "В 2016 году Америка отмечала важный юбилей: сто лет назад здесь начала складываться система национальных парков – охраняемых территорий, где и сегодня каждый может приобщиться к природе.",
-      sourceName: "ЛЕНТА.РУ",
-      sourceLink: "https://lenta.ru/",
-      tag: "Парки"
-    },
-    {
-      _id: 10,
-      link: NewsCardPic2,
-      date: "2 августа, 2019",
-      title: "7Лесные огоньки: история одной фотографии",
-      text: "Фотограф отвлеклась от освещения суровой политической реальности Мексики, чтобы запечатлеть ускользающую красоту одного из местных чудес природы.",
-      sourceName: "МЕДУЗА",
-      sourceLink: "https://meduza.io/",
-      tag: "Фотография"
-    },
-  ]
+  // const searchResult = [
+  //   {
+  //     _id: 1,
+  //     link: NewsCardPic1,
+  //     date: "2 августа, 2019",
+  //     title: "Национальное достояние – парки",
+  //     text: "В 2016 году Америка отмечала важный юбилей: сто лет назад здесь начала складываться система национальных парков – охраняемых территорий, где и сегодня каждый может приобщиться к природе.",
+  //     sourceName: "ЛЕНТА.РУ",
+  //     sourceLink: "https://lenta.ru/"
+  //   },
+  //   {
+  //     _id: 2,
+  //     link: NewsCardPic2,
+  //     date: "2 августа, 2019",
+  //     title: "Лесные огоньки: история одной фотографии",
+  //     text: "Фотограф отвлеклась от освещения суровой политической реальности Мексики, чтобы запечатлеть ускользающую красоту одного из местных чудес природы.",
+  //     sourceName: "МЕДУЗА",
+  //     sourceLink: "https://meduza.io/"
+  //   },
+  //   {
+  //     _id: 3,
+  //     link: NewsCardPic3,
+  //     date: "2 августа, 2019",
+  //     title: "Первозданная тайга»: новый фотопроект Игоря Шпиленка",
+  //     text: "Знаменитый фотограф снимает первозданные леса России, чтобы рассказать о необходимости их сохранения. В этот раз он отправился в Двинско-Пинежскую тайгу, где dfgdgdfgdfg dfgdf gdfgdfd gdgdfgdf dgdgdf dfgdfg  dfgdf g",
+  //     sourceName: "РИА",
+  //     sourceLink: "https://ria.ru/"
+  //   },
+  //   {
+  //     _id: 4,
+  //     link: NewsCardPic1,
+  //     date: "2 августа, 2019",
+  //     title: "1Национальное достояние – парки",
+  //     text: "В 2016 году Америка отмечала важный юбилей: сто лет назад здесь начала складываться система национальных парков – охраняемых территорий, где и сегодня каждый может приобщиться к природе.",
+  //     sourceName: "ЛЕНТА.РУ",
+  //     sourceLink: "https://lenta.ru/",
+  //     tag: "Парки"
+  //   },
+  //   {
+  //     _id: 5,
+  //     link: NewsCardPic2,
+  //     date: "2 августа, 2019",
+  //     title: "2Лесные огоньки: история одной фотографии",
+  //     text: "Фотограф отвлеклась от освещения суровой политической реальности Мексики, чтобы запечатлеть ускользающую красоту одного из местных чудес природы.",
+  //     sourceName: "МЕДУЗА",
+  //     sourceLink: "https://meduza.io/",
+  //     tag: "Фотография"
+  //   },
+  //   {
+  //     _id: 6,
+  //     link: NewsCardPic1,
+  //     date: "2 августа, 2019",
+  //     title: "3Национальное достояние – парки",
+  //     text: "В 2016 году Америка отмечала важный юбилей: сто лет назад здесь начала складываться система национальных парков – охраняемых территорий, где и сегодня каждый может приобщиться к природе.",
+  //     sourceName: "ЛЕНТА.РУ",
+  //     sourceLink: "https://lenta.ru/"
+  //   },
+  //   {
+  //     _id: 7,
+  //     link: NewsCardPic2,
+  //     date: "2 августа, 2019",
+  //     title: "4Лесные огоньки: история одной фотографии",
+  //     text: "Фотограф отвлеклась от освещения суровой политической реальности Мексики, чтобы запечатлеть ускользающую красоту одного из местных чудес природы.",
+  //     sourceName: "МЕДУЗА",
+  //     sourceLink: "https://meduza.io/"
+  //   },
+  //   {
+  //     _id: 8,
+  //     link: NewsCardPic3,
+  //     date: "2 августа, 2019",
+  //     title: "5Первозданная тайга»: новый фотопроект Игоря Шпиленка",
+  //     text: "Знаменитый фотограф снимает первозданные леса России, чтобы рассказать о необходимости их сохранения. В этот раз он отправился в Двинско-Пинежскую тайгу, где dfgdgdfgdfg dfgdf gdfgdfd gdgdfgdf dgdgdf dfgdfg  dfgdf g",
+  //     sourceName: "РИА",
+  //     sourceLink: "https://ria.ru/"
+  //   },
+  //   {
+  //     _id: 9,
+  //     link: NewsCardPic1,
+  //     date: "2 августа, 2019",
+  //     title: "6Национальное достояние – парки",
+  //     text: "В 2016 году Америка отмечала важный юбилей: сто лет назад здесь начала складываться система национальных парков – охраняемых территорий, где и сегодня каждый может приобщиться к природе.",
+  //     sourceName: "ЛЕНТА.РУ",
+  //     sourceLink: "https://lenta.ru/",
+  //     tag: "Парки"
+  //   },
+  //   {
+  //     _id: 10,
+  //     link: NewsCardPic2,
+  //     date: "2 августа, 2019",
+  //     title: "7Лесные огоньки: история одной фотографии",
+  //     text: "Фотограф отвлеклась от освещения суровой политической реальности Мексики, чтобы запечатлеть ускользающую красоту одного из местных чудес природы.",
+  //     sourceName: "МЕДУЗА",
+  //     sourceLink: "https://meduza.io/",
+  //     tag: "Фотография"
+  //   },
+  // ]
+
+  const [searchResult, setSearchResult] = useState([]);
+
+  const tetsApi = new NewsApi();
+
+  useEffect(() => {
+    tetsApi.getNews('АПЛ')
+    .then(res => {
+      console.log(res);
+      setSearchResult(res.articles);
+    })
+    // .then(() => setSearchResultMain(searchResult.slice(0, 3)))
+  }, []);
+
+  const addResult = () => setSearchResultMain(searchResult.slice(0, 3));
 
   // стейт для выгрузки нужного количества новостей на страницу
-  const [searchResultMain, setSearchResultMain] = useState(searchResult.slice(0, 3));
+  // const [searchResultMain, setSearchResultMain] = useState(searchResult.slice(0, 3));
+  const [searchResultMain, setSearchResultMain] = useState([]);
 
   // метод для добавляения новых карточек при нажатии на кнопку Показать еще
   const addMoreResults = () => {
@@ -163,12 +195,12 @@ function Main() {
         <div className="Main__search">
           <h1 className="Main__title">Что творится в мире?</h1>
           <h2 className="Main__subtitle">Находите самые свежие статьи на любую тему и сохраняйте в своём личном кабинете.</h2>
-          <SearchForm />
+          <SearchForm addResult={addResult} />
         </div>
       </div>
       <div className="Main__search-result">
         <p className="Main__search-result-title">Результаты поиска</p>
-        <NewsCardList articles={searchResultMain} />
+        <NewsCardList articles={searchResultMain} tag='someTag' />
         <button className="Main__search-button" onClick={addMoreResults}>Показать еще</button>
       </div>
       <Popup isOpen={isOpen} onClose={closePopup} />

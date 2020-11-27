@@ -4,16 +4,16 @@ import NewsCard from '../NewsCard/NewsCard';
 function NewsCardList(props) {
   return (
     <div className="NewsCardList">
-      {props.articles.map(article =>
+      {props.articles.map((article, index) =>
         <NewsCard
-          key={article._id}
-          link={article.link}
-          date={article.date}
+          key={index}
+          link={article.urlToImage}
+          date={article.publishedAt}
           title={article.title}
-          text={article.text}
-          sourceName={article.sourceName}
-          sourceLink={article.sourceLink}
-          tag={article.tag}
+          text={article.description}
+          sourceName={article.source.name}
+          sourceLink={article.url}
+          tag={props.tag}
         />
       )}
     </div>
