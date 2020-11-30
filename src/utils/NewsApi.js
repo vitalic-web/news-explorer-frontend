@@ -1,10 +1,11 @@
+import { newsApiUrl, newsApiKey } from './constants';
+
 export default class NewsApi {
   constructor() {
-    this._baseUrl = 'https://newsapi.org/v2/everything';
-    // '96699aa8ade74a64952b41a5b8787d5c' vitalic.web@yandex.ru
+    this._baseUrl = newsApiUrl;
     // 'c98ef6802a714016b2b3860e5de842b5' vtl.stk@gmail.com
     // 'fb1f505eb00a45d7bff9fc944fde20a4' vitaly.smm@gmail.com
-    this._API_KEY = 'c98ef6802a714016b2b3860e5de842b5';
+    this._API_KEY = newsApiKey;
     this._method = 'GET';
     this._headers = {
       'Accept': 'application/json',
@@ -29,7 +30,7 @@ export default class NewsApi {
   _setUrl(request) {
     this._setStartDate();
 
-    this._url = `https://newsapi.org/v2/everything?` +
+    this._url = `${this._baseUrl}?` +
       `q=${request}&` +
       `from=${this._startDate.toISOString()}&` +
       `to=${this._currentDate.toISOString()}&` +
