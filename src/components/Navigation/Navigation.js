@@ -1,12 +1,13 @@
 import './Navigation.css';
 import { useHistory } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import logoutIcon from '../../images/Navigation__logout.svg';
 import logoutIconSavedNews from '../../images/Navigation__logout_saved-news.svg';
 import burgerMenuBlack from '../../images/burgerMenu_black.svg';
 import burgerMenuWhite from '../../images/burgerMenu_white.svg';
 import closeIcon from '../../images/popup__close-icon.svg';
 import useWindowSize from '../../utils/useWindowSize';
+import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
 function Navigation(props) {
   const history = useHistory();
@@ -15,6 +16,11 @@ function Navigation(props) {
   const mobileSize = (windowSize.width >= 320) && (windowSize.width <= 767); // проверка на размер экрана 320-767
   const [burgerMenu, setBurgerMenu] = useState(false);
   const [burgerMenuActive, setBurgerMenuActive] = useState(false);
+  const currentUser = useContext(CurrentUserContext);
+
+  // console.log(props.isLogin);
+  // console.log(`currentUserEmail ${currentUser.email}`);
+  // console.log(`currentUserName ${currentUser.name}`);
 
   const clickBurger = () => {
     props.burger(true);
@@ -30,69 +36,61 @@ function Navigation(props) {
     document.body.style.overflow = '';
   }
 
+  console.log(props.isLogin);
+
   return (
     <>
       {mobileSize
         ?
         <nav>
           {burgerMenuActive
-          ?
-          <img className="Navigation__burger-menu-icon" src={closeIcon} alt="иконка закрытия меню" onClick={closeMenu} />
-          :
-          <img className="Navigation__burger-menu-icon" src={savedArticles ? burgerMenuBlack : burgerMenuWhite} alt="иконка мобильного меню" onClick={clickBurger} />
+            ?
+            <img className="Navigation__burger-menu-icon" src={closeIcon} alt="иконка закрытия меню" onClick={closeMenu} />
+            :
+            <img className="Navigation__burger-menu-icon" src={savedArticles ? burgerMenuBlack : burgerMenuWhite} alt="иконка мобильного меню" onClick={clickBurger} />
           }
           <section className={`Navigation__burger-menu ${burgerMenu && 'Navigation__burger-menu_active'}`}>
             <div className="Navigation__burger-menu-container">
               <a className="Navigation__burger-menu-link" href="/">Главная</a>
 
-              {savedArticles
-              ?
-              <>
-              <a className="Navigation__burger-menu-link" href="/saved-news">Сохранённые статьи</a>
-              <button className="Navigation__auth Navigation__auth_mobile">
-                {props.userName}
-                <img className="Navigation__logout Navigation__logout_mobile" src={logoutIcon} alt="Иконка выхода" />
-              </button>
-              </>
-
-              :
-              <button className="Navigation__auth Navigation__auth_mobile" onClick={props.open}>
-                Авторизоваться
-              </button>
+              {props.isLogin
+                ?
+                <>
+                  <a className="Navigation__burger-menu-link" href="/saved-news">Сохранённые статьи</a>
+                  <button className="Navigation__auth Navigation__auth_mobile" onclick={props.signOut}>
+                    {currentUser.name}
+                    <img className="Navigation__logout Navigation__logout_mobile" src={logoutIcon} alt="Иконка выхода" />
+                  </button>
+                </>
+                :
+                <button className="Navigation__auth Navigation__auth_mobile" onClick={props.open}>
+                  Авторизоваться
+                </button>
               }
             </div>
           </section>
         </nav>
         :
-        <>
-          {savedArticles
-          ?
-          <nav className="Navigation">
-            <a className="Navigation__main Navigation__main_saved-news" href="/">
-              Главная
-            </a>
-            <a className={`Navigation__saved-articles ${savedArticles && 'Navigation__saved-articles_saved-news'}`}
-              href="/saved-news">
-              Сохраненные статьи
-            </a>
-            <button className={`Navigation__auth ${savedArticles && 'Navigation__auth_saved-news'}`}>
-             {props.userName}
-             <img className="Navigation__logout"
-              src={logoutIconSavedNews}
-              alt="Иконка выхода" />
-            </button>
-          </nav>
-          :
-          <nav className="Navigation">
-            <a className="Navigation__main" href="/">
-              Главная
-            </a>
+        <nav className="Navigation">
+          <a className={`Navigation__main ${savedArticles && 'Navigation__main_saved-news'}`} href="/">Главная</a>
+          {props.isLogin
+            ?
+            <>
+              <a className={`Navigation__saved-articles ${savedArticles && 'Navigation__saved-articles_saved-news'}`}
+                href="/saved-news">Сохраненные статьи</a>
+              <button className={`Navigation__auth ${savedArticles && 'Navigation__auth_saved-news'}`} onClick={props.signOut}>
+                {currentUser.name}
+                <img className="Navigation__logout"
+                  src={savedArticles ? logoutIconSavedNews : logoutIcon}
+                  alt="Иконка выхода" />
+              </button>
+            </>
+            :
             <button className={`Navigation__auth ${savedArticles && 'Navigation__auth_saved-news'}`} onClick={props.open}>
               Авторизоваться
             </button>
-          </nav>
           }
-        </>
+        </nav>
       }
     </>
   );

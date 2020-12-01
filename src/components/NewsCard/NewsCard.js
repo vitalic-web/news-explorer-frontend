@@ -38,7 +38,7 @@ function NewsCard(props) {
         :
         <div className="NewsCard__bookmark">
           <div onClick={toggleBookmark} className={`NewsCard__bookmark-image ${click && 'NewsCard__bookmark-image_checked'}`} />
-          <button className="NewsCard__bookmark-button">Войдите, чтобы сохранять статьи</button>
+          {!props.isLogin && <button className="NewsCard__bookmark-button">Войдите, чтобы сохранять статьи</button>}
         </div>
       }
     </div>

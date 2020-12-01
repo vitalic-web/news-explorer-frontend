@@ -17,6 +17,8 @@ function Popup(props) {
     props.setEmail(e.target.value);
     setValidationMessage({ email: 'Неправильный формат email' });
     setValidityEmail(e.target.validity.valid);
+    props.setSameUser(false);
+    props.setAuthError(false);
   }
 
   // валидация поля пароль
@@ -80,7 +82,7 @@ function Popup(props) {
         setButtonDisabled(false);
       }
     }
-  },);
+  });
 
   return (
     <section className={`Popup ${props.isOpen && 'Popup_active'}`}>
@@ -101,6 +103,7 @@ function Popup(props) {
           <input className="Popup__input" onChange={validatePassword} name="password" type="password" required
             value={props.password} minLength="8" maxLength="200" id="password" placeholder="Введите пароль" />
           <span className="Popup__input-error-message" id="password-input-error">{!validityPassword && validationMessage.password}</span>
+          {props.authError && <span className="Popup__input-error-message Popup__input-error-message_regisrate">{props.loginError}</span>}
         </div>
 
         {/* попап регистрации, зависит от состояния переменной registration */}
@@ -117,7 +120,7 @@ function Popup(props) {
         }
 
         <button className={`Popup__save-button ${buttonDisabled && 'Popup__save-button_disabled'}`}
-          onClick={registration ? showSuccessPopup : undefined} type="submit" disabled={buttonDisabled}>{registration ? 'Зарегистрироваться' : 'Войти'}</button>
+          onClick={registration ? showSuccessPopup : props.login} type="submit" disabled={buttonDisabled}>{registration ? 'Зарегистрироваться' : 'Войти'}</button>
         <p className="Popup__auth">Или <span className="Popup__auth-link" onClick={toggleAuth}>{registration ? 'Войти' : 'Зарегистрироваться'}</span></p>
         <button className="Popup__close-icon" type="button" onClick={props.onClose} />
       </form>

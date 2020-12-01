@@ -7,6 +7,7 @@ import Footer from '../Footer/Footer';
 import Popup from '../Popup/Popup';
 import NewsApi from '../../utils/NewsApi';
 import MainApi from '../../utils/MainApi';
+import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
 function App() {
   const [isOpen, setIsOpen] = useState(false); // открытие/закрытие попапа
@@ -20,11 +21,71 @@ function App() {
   const [password, setPassword] = useState(''); // значение инпута пароль
   const [name, setName] = useState(''); // значение инпута имя
   const [sameUser, setSameUser] = useState(false); // проверка юзера в базе
+  const [currentUser, setCurrentUser] = useState({});
+  const [isLogin, setIsLogin] = useState(false);
+  const [authError, setAuthError] = useState(false);
+  const jwt = localStorage.getItem('jwt');
 
-  // console.log(`e: ${email}, p: ${password}, n: ${name}`);
+  const [loginError, setLoginError] = useState('');
 
   const newsApi = new NewsApi(); // экземпляр апи по поиску новостей
-  const mainApi = new MainApi(); // экземпляр главного апи
+  const mainApi = new MainApi({ // экземпляр главного апи
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+    }
+  });
+  const authApi = new MainApi({ // экземпляр главного апи для аутентийикации
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${jwt}`
+    }
+  });
+
+  // регистрация пользователя
+  const registration = (popup) => {
+    mainApi.register(email, password, name, setSameUser, popup)
+      .then(res => console.log(res))
+      .catch((err) => console.log(err));
+  }
+
+  // авторизация пользователя
+  const login = (e) => {
+    e.preventDefault();
+
+    authApi.login(email, password, setAuthError, closePopup, setLoginError)
+      .then(() => {
+        setIsLogin(true);
+        setCurrentUser(email, password);
+      })
+      .catch((err) => console.log(err));
+  }
+
+  // console.log(`isLogin ${isLogin}`);
+
+  // проверка токена
+  const tokenCheck = (jwt) => {
+
+    if (jwt) {
+      authApi.getProfileInfo()
+        .then(res => {
+          setIsLogin(true);
+          setCurrentUser(res);
+        })
+        .catch((err) => console.log(err));
+    }
+  }
+
+  useEffect(() => {
+    tokenCheck(jwt);
+  }, [isLogin]);
+
+  // выход из учетной записи
+  function signOut() {
+    localStorage.removeItem('jwt');
+    setIsLogin(false);
+  }
 
   // функция сортировки результатов поиска по дате, начиная с самой актуальной
   const sortByDate = arr => {
@@ -63,11 +124,6 @@ function App() {
     setSearchResultMain([...searchResultMain, ...searchResult.slice(searchResultMain.length, searchResultMain.length + 3)]);
   }
 
-  const registration = (popup) => {
-    mainApi.register(email, password, name, setSameUser, popup)
-    .then(res => console.log(res))
-  }
-
   // функция открытия попапа
   const openPopup = () => {
     setIsOpen(true);
@@ -103,24 +159,30 @@ function App() {
   })
 
   return (
-    <div className="App">
-      <Switch>
-        <Route path="/saved-news">
-          <SavedNews />
-        </Route>
+    <CurrentUserContext.Provider value={currentUser}>
+      {currentUser &&
+        <div className="App">
+          <Switch>
+            <Route path="/saved-news">
+              <SavedNews isLogin={isLogin} signOut={signOut}/>
+            </Route>
 
-        <Route path="/">
-          <Main open={openPopup} addResult={addResult} setSearchWord={setSearchWord} noResult={noResult} preloader={preloader}
-            searchForm={searchForm} searchResultMain={searchResultMain} searchWord={searchWord} addMoreResults={addMoreResults} />
-        </Route>
-      </Switch>
+            <Route path="/">
+              <Main open={openPopup} addResult={addResult} setSearchWord={setSearchWord} noResult={noResult} preloader={preloader}
+                searchForm={searchForm} searchResultMain={searchResultMain} searchWord={searchWord} addMoreResults={addMoreResults}
+                isLogin={isLogin} signOut={signOut} />
+            </Route>
+          </Switch>
 
-      <Popup isOpen={isOpen} onClose={closePopup} email={email} setEmail={setEmail}
-        password={password} setPassword={setPassword} name={name} setName={setName}
-        registration={registration} sameUser={sameUser} />
+          <Popup isOpen={isOpen} onClose={closePopup} email={email} setEmail={setEmail} password={password}
+            setPassword={setPassword} name={name} setName={setName} registration={registration} sameUser={sameUser}
+            setSameUser={setSameUser} login={login} authError={authError} setAuthError={setAuthError}
+            loginError={loginError} />
 
-      <Footer />
-    </div>
+          <Footer />
+        </div>
+      }
+    </CurrentUserContext.Provider>
   );
 }
 

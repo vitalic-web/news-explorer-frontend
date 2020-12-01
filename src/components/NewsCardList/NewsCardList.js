@@ -27,6 +27,7 @@ function NewsCardList(props) {
           sourceName={article.source.name}
           sourceLink={article.url}
           tag={props.tag}
+          isLogin={props.isLogin}
         />
       )}
     </div>

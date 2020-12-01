@@ -39,7 +39,7 @@
 }
 
 .Navigation__saved-articles {
-  margin: 0 34px;
+  margin: 0 34px 0 0;
   text-decoration: none;
   color: white;
   height: 80px;
