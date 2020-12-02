@@ -9,7 +9,6 @@ export default class NewsApi {
     this._method = 'GET';
     this._headers = {
       'Accept': 'application/json',
-      'Content-Type': 'application/x-www-form-urlencoded',
     };
     this._currentDate = new Date();
     this._startDate = new Date();

@@ -60,16 +60,41 @@ export default class MainApi {
       })
       .then((data) => {
         localStorage.setItem('jwt', data.token);
+        localStorage.setItem('isLogin', true);
         return data;
       })
   }
 
   getProfileInfo() {
     return fetch(`${this._baseUrl}/users/me`, {
-      method: this._method,
+      method: 'GET',
       headers: this._headers
     })
       .then(this._handleResponse)
   }
 
+  addNewArticle(newsCard) {
+    return fetch(`${this._baseUrl}/articles`, {
+      method: 'POST',
+      headers: this._headers,
+      body: JSON.stringify({
+        keyword: newsCard.tag,
+        title: newsCard.title,
+        text: newsCard.description,
+        date: newsCard.publishedAt,
+        source: newsCard.source.name,
+        link: newsCard.url,
+        image: newsCard.urlToImage
+      })
+    })
+      .then(this._handleResponse)
+  };
+
+  getSavedArticles() {
+    return fetch(`${this._baseUrl}/articles`, {
+      method: 'GET',
+      headers: this._headers
+    })
+      .then(this._handleResponse)
+  };
 }

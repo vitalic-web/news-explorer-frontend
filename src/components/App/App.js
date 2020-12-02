@@ -1,12 +1,13 @@
 import './App.css';
 import { useState, useEffect } from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, useHistory } from 'react-router-dom';
 import Main from '../Main/Main';
 import SavedNews from '../SavedNews/SavedNews';
 import Footer from '../Footer/Footer';
 import Popup from '../Popup/Popup';
 import NewsApi from '../../utils/NewsApi';
 import MainApi from '../../utils/MainApi';
+import ProtectedRoute from '../ProtectedRoute';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
 function App() {
@@ -22,11 +23,20 @@ function App() {
   const [name, setName] = useState(''); // значение инпута имя
   const [sameUser, setSameUser] = useState(false); // проверка юзера в базе
   const [currentUser, setCurrentUser] = useState({});
-  const [isLogin, setIsLogin] = useState(false);
+  const [isLogin, setIsLogin] = useState(localStorage.isLogin);
   const [authError, setAuthError] = useState(false);
+  const history = useHistory();
+  const savedArticles = history.location.pathname === '/saved-news';
   const jwt = localStorage.getItem('jwt');
 
+  // console.log(searchResult);
+  // console.log(searchResultMain);
+
   const [loginError, setLoginError] = useState('');
+  // const [click, setClick] = useState(false);
+  const [savedArticlesData, setSavedArticlesData] = useState([]);
+
+  // console.log(savedArticlesData);
 
   const newsApi = new NewsApi(); // экземпляр апи по поиску новостей
   const mainApi = new MainApi({ // экземпляр главного апи
@@ -42,6 +52,25 @@ function App() {
       'Authorization': `Bearer ${jwt}`
     }
   });
+
+  const addNewsCard = (newsCard, setClick) => {
+    // authApi.addNewArticle(newsCard)
+    //   .then(res => {
+    //     setClick(true);
+    //     setSavedArticlesData([...savedArticlesData, res]);
+    //     localStorage.setItem('savedArticlesData', JSON.stringify([...savedArticlesData, res]));
+    //   })
+
+    authApi.getSavedArticles()
+      .then(res => console.log(res))
+
+  }
+
+  // const toggleBookmark = (e) => {
+  //   e.preventDefault();
+
+  //   setClick(!click);
+  // }
 
   // регистрация пользователя
   const registration = (popup) => {
@@ -61,8 +90,6 @@ function App() {
       })
       .catch((err) => console.log(err));
   }
-
-  // console.log(`isLogin ${isLogin}`);
 
   // проверка токена
   const tokenCheck = (jwt) => {
@@ -85,6 +112,11 @@ function App() {
   function signOut() {
     localStorage.removeItem('jwt');
     setIsLogin(false);
+    localStorage.removeItem('isLogin');
+
+    if (savedArticles) {
+      setIsOpen(true);
+    }
   }
 
   // функция сортировки результатов поиска по дате, начиная с самой актуальной
@@ -92,6 +124,11 @@ function App() {
     return arr.sort(function (a, b) {
       return new Date(b.publishedAt) - new Date(a.publishedAt);
     })
+  }
+
+  // функция добавления тэга
+  const addTag = (arr, tag) => {
+    arr.map(item => item.tag = tag);
   }
 
   // функция поиска новостей
@@ -104,8 +141,8 @@ function App() {
 
     newsApi.getNews(searchWord)
       .then(res => {
-
         setPreloader(false);
+        addTag(res.articles, searchWord);
 
         if (res.totalResults === 0) {
           setNoResult(true);
@@ -163,14 +200,17 @@ function App() {
       {currentUser &&
         <div className="App">
           <Switch>
-            <Route path="/saved-news">
-              <SavedNews isLogin={isLogin} signOut={signOut}/>
-            </Route>
+            <ProtectedRoute exact path="/saved-news" isLogin={isLogin}
+              component={SavedNews}
+              signOut={signOut}
+            >
+              {/* <SavedNews isLogin={isLogin} signOut={signOut}/> */}
+            </ProtectedRoute>
 
             <Route path="/">
               <Main open={openPopup} addResult={addResult} setSearchWord={setSearchWord} noResult={noResult} preloader={preloader}
                 searchForm={searchForm} searchResultMain={searchResultMain} searchWord={searchWord} addMoreResults={addMoreResults}
-                isLogin={isLogin} signOut={signOut} />
+                isLogin={isLogin} signOut={signOut} addNewsCard={addNewsCard} />
             </Route>
           </Switch>
 

@@ -20,6 +20,8 @@ function NewsCardList(props) {
       {props.articles.map((article, index) =>
         <NewsCard
           key={index}
+          articles={props.articles}
+          number={index}
           link={article.urlToImage}
           date={dateFormat(article.publishedAt)}
           title={article.title}
@@ -28,6 +30,7 @@ function NewsCardList(props) {
           sourceLink={article.url}
           tag={props.tag}
           isLogin={props.isLogin}
+          addNewsCard={props.addNewsCard}
         />
       )}
     </div>

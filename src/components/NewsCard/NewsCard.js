@@ -7,9 +7,17 @@ function NewsCard(props) {
   const history = useHistory();
   const savedArticles = history.location.pathname === '/saved-news'; // проверка на роут страницы сохраненных новостей
 
+  // const [savedArticlesData, setSavedArticlesData] = useState([]);
+
+  // console.log(savedArticlesData);
+
   const toggleBookmark = (e) => {
     e.preventDefault();
-    setClick(!click);
+
+    // setClick(!click);
+    props.addNewsCard(props.articles[props.number], setClick)
+    // console.log(props.articles[props.number]);
+    // console.log(click);
   }
 
   const deleteArticle = (e) => e.preventDefault();
@@ -37,7 +45,7 @@ function NewsCard(props) {
         </>
         :
         <div className="NewsCard__bookmark">
-          <div onClick={toggleBookmark} className={`NewsCard__bookmark-image ${click && 'NewsCard__bookmark-image_checked'}`} />
+          <div onClick={props.isLogin ? toggleBookmark : undefined} className={`NewsCard__bookmark-image ${click && 'NewsCard__bookmark-image_checked'}`} />
           {!props.isLogin && <button className="NewsCard__bookmark-button">Войдите, чтобы сохранять статьи</button>}
         </div>
       }

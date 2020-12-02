@@ -36,8 +36,6 @@ function Navigation(props) {
     document.body.style.overflow = '';
   }
 
-  console.log(props.isLogin);
-
   return (
     <>
       {mobileSize

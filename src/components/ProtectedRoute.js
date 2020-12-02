@@ -1,9 +1,10 @@
 import { Route, Redirect } from "react-router-dom";
 
 const ProtectedRoute = ({ component: Component, ...props }) => {
+  console.log(`ProtectedRoute: ${localStorage.isLogin}`);
   return (
     <Route>
-      { () => props.isLogin ? <Component {...props} /> : <Redirect to="./sign-up" /> }
+      { () => localStorage.isLogin ? <Component {...props} /> : <Redirect to="/" /> }
     </Route>
   )
 }
