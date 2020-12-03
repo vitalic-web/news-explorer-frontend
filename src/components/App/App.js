@@ -28,15 +28,8 @@ function App() {
   const history = useHistory();
   const savedArticles = history.location.pathname === '/saved-news';
   const jwt = localStorage.getItem('jwt');
-
-  // console.log(searchResult);
-  // console.log(searchResultMain);
-
   const [loginError, setLoginError] = useState('');
-  // const [click, setClick] = useState(false);
-  const [savedArticlesData, setSavedArticlesData] = useState([]);
-
-  // console.log(savedArticlesData);
+  const [savedArticlesData, setSavedArticlesData] = useState(JSON.parse(localStorage.getItem('savedArticlesData')));
 
   const newsApi = new NewsApi(); // экземпляр апи по поиску новостей
   const mainApi = new MainApi({ // экземпляр главного апи
@@ -45,6 +38,7 @@ function App() {
       'Content-Type': 'application/json',
     }
   });
+
   const authApi = new MainApi({ // экземпляр главного апи для аутентийикации
     headers: {
       'Accept': 'application/json',
@@ -53,24 +47,38 @@ function App() {
     }
   });
 
+  console.log(searchResult);
+  console.log(savedArticlesData);
+
   const addNewsCard = (newsCard, setClick) => {
-    // authApi.addNewArticle(newsCard)
-    //   .then(res => {
-    //     setClick(true);
-    //     setSavedArticlesData([...savedArticlesData, res]);
-    //     localStorage.setItem('savedArticlesData', JSON.stringify([...savedArticlesData, res]));
-    //   })
-
-    authApi.getSavedArticles()
-      .then(res => console.log(res))
-
+    authApi.addNewArticle(newsCard)
+      .then(res => {
+        setClick(true);
+        setSavedArticlesData([...savedArticlesData, res.data]);
+        localStorage.setItem('savedArticlesData', JSON.stringify([...savedArticlesData, res.data]));
+      })
   }
 
-  // const toggleBookmark = (e) => {
-  //   e.preventDefault();
+  const deleteNewsCard = (newsCard, setClick) => {
+    authApi.getSavedArticles()
+      .then(res => {
+        const deletedCard = res.data.find(item => item.link === newsCard.url);
 
-  //   setClick(!click);
-  // }
+        authApi.deleterAticle(deletedCard)
+          .then(res => {
+            setClick(false);
+            setSavedArticlesData(savedArticlesData.filter(item => item.link !== deletedCard.link));
+            localStorage.setItem('savedArticlesData', JSON.stringify(savedArticlesData.filter(item => item.link !== deletedCard.link)));
+          })
+      })
+  }
+
+  const getUserNewsCards = () => {
+    authApi.getSavedArticles()
+      .then(res => {
+        localStorage.setItem('savedArticlesData', JSON.stringify(res.data));
+      })
+  }
 
   // регистрация пользователя
   const registration = (popup) => {
@@ -99,6 +107,7 @@ function App() {
         .then(res => {
           setIsLogin(true);
           setCurrentUser(res);
+          getUserNewsCards();
         })
         .catch((err) => console.log(err));
     }
@@ -110,9 +119,10 @@ function App() {
 
   // выход из учетной записи
   function signOut() {
-    localStorage.removeItem('jwt');
     setIsLogin(false);
+    localStorage.removeItem('jwt');
     localStorage.removeItem('isLogin');
+    localStorage.removeItem('savedArticlesData');
 
     if (savedArticles) {
       setIsOpen(true);
@@ -203,6 +213,7 @@ function App() {
             <ProtectedRoute exact path="/saved-news" isLogin={isLogin}
               component={SavedNews}
               signOut={signOut}
+              savedArticlesData={savedArticlesData}
             >
               {/* <SavedNews isLogin={isLogin} signOut={signOut}/> */}
             </ProtectedRoute>
@@ -210,7 +221,8 @@ function App() {
             <Route path="/">
               <Main open={openPopup} addResult={addResult} setSearchWord={setSearchWord} noResult={noResult} preloader={preloader}
                 searchForm={searchForm} searchResultMain={searchResultMain} searchWord={searchWord} addMoreResults={addMoreResults}
-                isLogin={isLogin} signOut={signOut} addNewsCard={addNewsCard} />
+                isLogin={isLogin} signOut={signOut} addNewsCard={addNewsCard} deleteNewsCard={deleteNewsCard}
+                getUserNewsCards={getUserNewsCards} />
             </Route>
           </Switch>
 

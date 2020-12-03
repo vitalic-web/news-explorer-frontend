@@ -1,7 +1,11 @@
 import './NewsCardList.css';
 import NewsCard from '../NewsCard/NewsCard';
+import { useHistory } from 'react-router-dom';
 
 function NewsCardList(props) {
+  const history = useHistory();
+  const savedArticles = history.location.pathname === '/saved-news';
+
   const dateFormat = date => {
     const newsDate = new Date(date);
 
@@ -22,15 +26,17 @@ function NewsCardList(props) {
           key={index}
           articles={props.articles}
           number={index}
-          link={article.urlToImage}
-          date={dateFormat(article.publishedAt)}
+          link={savedArticles ? article.image : article.urlToImage}
+          date={dateFormat(savedArticles ? article.date : article.publishedAt)}
           title={article.title}
-          text={article.description}
-          sourceName={article.source.name}
-          sourceLink={article.url}
-          tag={props.tag}
+          text={savedArticles ? article.text : article.description}
+          sourceName={savedArticles ? article.source : article.source.name}
+          sourceLink={savedArticles ? article.link : article.url}
+          tag={article.keyword}
           isLogin={props.isLogin}
           addNewsCard={props.addNewsCard}
+          deleteNewsCard={props.deleteNewsCard}
+          getUserNewsCards={props.getUserNewsCards}
         />
       )}
     </div>

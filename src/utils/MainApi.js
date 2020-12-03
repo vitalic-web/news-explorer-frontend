@@ -1,4 +1,5 @@
 import { mainApiUrl } from './constants';
+import { noImage } from './constants';
 
 export default class MainApi {
   constructor(options) {
@@ -84,7 +85,7 @@ export default class MainApi {
         date: newsCard.publishedAt,
         source: newsCard.source.name,
         link: newsCard.url,
-        image: newsCard.urlToImage
+        image: newsCard.urlToImage || noImage,
       })
     })
       .then(this._handleResponse)
@@ -93,6 +94,15 @@ export default class MainApi {
   getSavedArticles() {
     return fetch(`${this._baseUrl}/articles`, {
       method: 'GET',
+      headers: this._headers
+    })
+      .then(this._handleResponse)
+  };
+
+  deleterAticle(article) {
+    // console.log(article);
+    return fetch(`${this._baseUrl}/articles/${article._id}`, {
+      method: 'DELETE',
       headers: this._headers
     })
       .then(this._handleResponse)

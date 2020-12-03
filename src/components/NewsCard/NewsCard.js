@@ -1,6 +1,7 @@
 import './NewsCard.css';
 import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import noImage from '../../images/no-image.png';
 
 function NewsCard(props) {
   const [click, setClick] = useState(false);
@@ -14,10 +15,18 @@ function NewsCard(props) {
   const toggleBookmark = (e) => {
     e.preventDefault();
 
-    // setClick(!click);
-    props.addNewsCard(props.articles[props.number], setClick)
-    // console.log(props.articles[props.number]);
-    // console.log(click);
+    if (click) {
+      props.deleteNewsCard(props.articles[props.number], setClick);
+      // console.log('click');
+      // setClick(false);
+      // удаление карты
+      // перевод стейта в false
+    } else {
+      props.addNewsCard(props.articles[props.number], setClick);
+      props.getUserNewsCards();
+    }
+
+    // props.getUserNewsCards(props.articles[props.number]);
   }
 
   const deleteArticle = (e) => e.preventDefault();
@@ -26,7 +35,7 @@ function NewsCard(props) {
     <div className="NewsCard-area">
       <a className="NewsCard" href={props.sourceLink} rel="noreferrer" target="_blank">
         <div className="NewsCard__content">
-          <img className="NewsCard__image" src={props.link} alt={props.title} />
+          <img className="NewsCard__image" src={props.link || noImage} alt={props.title} />
           <p className="NewsCard__date">{props.date}</p>
           <h3 className="NewsCard__title">{props.title}</h3>
           <p className="NewsCard__text">{props.text}</p>
