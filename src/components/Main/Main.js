@@ -24,7 +24,7 @@ function Main(props) {
         &&
         <div className="Main__search-result">
           <p className="Main__search-result-title">Результаты поиска</p>
-          <NewsCardList articles={props.searchResultMain} tag={props.searchWord} isLogin={props.isLogin}
+          <NewsCardList articles={props.searchResultMain} tag={props.searchWord} isLogin={props.isLogin} open={props.open}
             addNewsCard={props.addNewsCard} deleteNewsCard={props.deleteNewsCard} getUserNewsCards={props.getUserNewsCards} />
           <button className="Main__search-button" onClick={props.addMoreResults}>Показать еще</button>
         </div>

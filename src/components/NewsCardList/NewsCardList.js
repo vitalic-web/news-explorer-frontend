@@ -37,6 +37,9 @@ function NewsCardList(props) {
           addNewsCard={props.addNewsCard}
           deleteNewsCard={props.deleteNewsCard}
           getUserNewsCards={props.getUserNewsCards}
+          deleteNewsCardSaved={props.deleteNewsCardSaved}
+          open={props.open}
+          saved={article.saved}
         />
       )}
     </div>

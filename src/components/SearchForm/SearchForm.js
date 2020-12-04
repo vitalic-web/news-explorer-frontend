@@ -1,5 +1,4 @@
 import './SearchForm.css';
-import { useState } from 'react';
 
 function SearchForm(props) {
   const getInput = e => {

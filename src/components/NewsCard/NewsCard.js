@@ -8,28 +8,27 @@ function NewsCard(props) {
   const history = useHistory();
   const savedArticles = history.location.pathname === '/saved-news'; // проверка на роут страницы сохраненных новостей
 
-  // const [savedArticlesData, setSavedArticlesData] = useState([]);
-
-  // console.log(savedArticlesData);
-
   const toggleBookmark = (e) => {
     e.preventDefault();
 
-    if (click) {
+    if (click || props.articles[props.number].saved) {
       props.deleteNewsCard(props.articles[props.number], setClick);
-      // console.log('click');
-      // setClick(false);
-      // удаление карты
-      // перевод стейта в false
+      props.articles[props.number].saved = false;
     } else {
       props.addNewsCard(props.articles[props.number], setClick);
       props.getUserNewsCards();
     }
-
-    // props.getUserNewsCards(props.articles[props.number]);
   }
 
-  const deleteArticle = (e) => e.preventDefault();
+  const deleteArticle = (e) => {
+    e.preventDefault();
+
+    props.deleteNewsCardSaved(props.articles[props.number], setClick);
+  }
+
+  const openLoginPopup = () => {
+    props.open(true);
+  }
 
   return (
     <div className="NewsCard-area">
@@ -54,7 +53,7 @@ function NewsCard(props) {
         </>
         :
         <div className="NewsCard__bookmark">
-          <div onClick={props.isLogin ? toggleBookmark : undefined} className={`NewsCard__bookmark-image ${click && 'NewsCard__bookmark-image_checked'}`} />
+          <div onClick={props.isLogin ? toggleBookmark : openLoginPopup} className={`NewsCard__bookmark-image ${click && 'NewsCard__bookmark-image_checked'} ${props.isLogin && 'NewsCard__bookmark-image_logged'} ${props.saved && 'NewsCard__bookmark-image_checked'}`} />
           {!props.isLogin && <button className="NewsCard__bookmark-button">Войдите, чтобы сохранять статьи</button>}
         </div>
       }

@@ -47,9 +47,6 @@ function App() {
     }
   });
 
-  console.log(searchResult);
-  console.log(savedArticlesData);
-
   const addNewsCard = (newsCard, setClick) => {
     authApi.addNewArticle(newsCard)
       .then(res => {
@@ -57,12 +54,13 @@ function App() {
         setSavedArticlesData([...savedArticlesData, res.data]);
         localStorage.setItem('savedArticlesData', JSON.stringify([...savedArticlesData, res.data]));
       })
+      .catch((err) => console.log(err));
   }
 
   const deleteNewsCard = (newsCard, setClick) => {
     authApi.getSavedArticles()
       .then(res => {
-        const deletedCard = res.data.find(item => item.link === newsCard.url);
+        const deletedCard = res.data.find(item => item.link === (savedArticles ? newsCard.link : newsCard.url));
 
         authApi.deleterAticle(deletedCard)
           .then(res => {
@@ -71,6 +69,7 @@ function App() {
             localStorage.setItem('savedArticlesData', JSON.stringify(savedArticlesData.filter(item => item.link !== deletedCard.link)));
           })
       })
+      .catch((err) => console.log(err));
   }
 
   const getUserNewsCards = () => {
@@ -78,6 +77,7 @@ function App() {
       .then(res => {
         localStorage.setItem('savedArticlesData', JSON.stringify(res.data));
       })
+      .catch((err) => console.log(err));
   }
 
   // регистрация пользователя
@@ -160,10 +160,22 @@ function App() {
         } else {
           setNoResult(false);
           setSearchForm(true);
-          setSearchResult(sortByDate(res.articles));
-          setSearchResultMain(sortByDate(res.articles).slice(0, 3));
+
+          if (isLogin) { // проверка на наличие найденных карт в сохраненных
+            res.articles.forEach(item => {
+              if (savedArticlesData.find(savedArticle => savedArticle.link === item.url)) {
+                item.saved = true;
+              }
+            })
+            setSearchResult(sortByDate(res.articles));
+            setSearchResultMain(sortByDate(res.articles).slice(0, 3));
+          } else {
+            setSearchResult(sortByDate(res.articles));
+            setSearchResultMain(sortByDate(res.articles).slice(0, 3));
+          }
         }
       })
+      .catch((err) => console.log(err));
   }
 
   // метод для добавляения новых карточек при нажатии на кнопку Показать еще
@@ -214,8 +226,9 @@ function App() {
               component={SavedNews}
               signOut={signOut}
               savedArticlesData={savedArticlesData}
+              deleteNewsCardSaved={deleteNewsCard}
+              openPopup={openPopup}
             >
-              {/* <SavedNews isLogin={isLogin} signOut={signOut}/> */}
             </ProtectedRoute>
 
             <Route path="/">
