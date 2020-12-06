@@ -100,7 +100,6 @@ export default class MainApi {
   };
 
   deleterAticle(article) {
-    // console.log(article);
     return fetch(`${this._baseUrl}/articles/${article._id}`, {
       method: 'DELETE',
       headers: this._headers

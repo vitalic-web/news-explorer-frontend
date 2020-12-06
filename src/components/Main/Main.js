@@ -15,13 +15,13 @@ function Main(props) {
         <div className="Main__search">
           <h1 className="Main__title">Что творится в мире?</h1>
           <h2 className="Main__subtitle">Находите самые свежие статьи на любую тему и сохраняйте в своём личном кабинете.</h2>
-          <SearchForm addResult={props.addResult} searchWord={props.setSearchWord} />
+          <SearchForm addResult={props.addResult} setSearchWord={props.setSearchWord} searchWord={props.searchWord}
+            preloader={props.preloader} />
         </div>
       </div>
-      {props.noResult && <NoResult />}
+      {props.noResult && <NoResult newsSearchError={props.newsSearchError} />}
       {props.preloader && <Preloader />}
-      {props.searchForm
-        &&
+      {localStorage.articlesDataMain &&
         <div className="Main__search-result">
           <p className="Main__search-result-title">Результаты поиска</p>
           <NewsCardList articles={props.searchResultMain} tag={props.searchWord} isLogin={props.isLogin} open={props.open}

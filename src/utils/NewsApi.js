@@ -1,11 +1,10 @@
-import { newsApiUrl, newsApiKey } from './constants';
+import { newsApiUrl, newsApiKey, newsDaysPeriod } from './constants';
 
 export default class NewsApi {
   constructor() {
     this._baseUrl = newsApiUrl;
-    // 'c98ef6802a714016b2b3860e5de842b5' vtl.stk@gmail.com
-    // 'fb1f505eb00a45d7bff9fc944fde20a4' vitaly.smm@gmail.com
     this._API_KEY = newsApiKey;
+    this._newsDaysPeriod = newsDaysPeriod;
     this._method = 'GET';
     this._headers = {
       'Accept': 'application/json',
@@ -23,7 +22,7 @@ export default class NewsApi {
   };
 
   _setStartDate() {
-    this._startDate.setDate(this._currentDate.getDate() - 7);
+    this._startDate.setDate(this._currentDate.getDate() - this._newsDaysPeriod);
   }
 
   _setUrl(request) {

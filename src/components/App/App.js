@@ -9,11 +9,11 @@ import NewsApi from '../../utils/NewsApi';
 import MainApi from '../../utils/MainApi';
 import ProtectedRoute from '../ProtectedRoute';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
+import { numOfArticles } from '../../utils/constants';
 
 function App() {
   const [isOpen, setIsOpen] = useState(false); // открытие/закрытие попапа
-  const [searchResult, setSearchResult] = useState([]); // найденные новости
-  const [searchResultMain, setSearchResultMain] = useState([]); // новости для вывода на страниццу
+  const [searchResultMain, setSearchResultMain] = useState(JSON.parse(localStorage.getItem('articlesDataMain')));
   const [searchWord, setSearchWord] = useState(''); // слово поиска
   const [searchForm, setSearchForm] = useState(false); // видимость результатов поиска
   const [noResult, setNoResult] = useState(false); // нет результатов
@@ -30,6 +30,7 @@ function App() {
   const jwt = localStorage.getItem('jwt');
   const [loginError, setLoginError] = useState('');
   const [savedArticlesData, setSavedArticlesData] = useState(JSON.parse(localStorage.getItem('savedArticlesData')));
+  const [newsSearchError, setNewsSearchError] = '';
 
   const newsApi = new NewsApi(); // экземпляр апи по поиску новостей
   const mainApi = new MainApi({ // экземпляр главного апи
@@ -92,9 +93,11 @@ function App() {
     e.preventDefault();
 
     authApi.login(email, password, setAuthError, closePopup, setLoginError)
-      .then(() => {
-        setIsLogin(true);
-        setCurrentUser(email, password);
+      .then((res) => {
+        if (res.token) {
+          setIsLogin(true);
+          setCurrentUser(email, password);
+        }
       })
       .catch((err) => console.log(err));
   }
@@ -123,6 +126,8 @@ function App() {
     localStorage.removeItem('jwt');
     localStorage.removeItem('isLogin');
     localStorage.removeItem('savedArticlesData');
+    localStorage.removeItem('articlesDataMain');
+    localStorage.removeItem('searchWord');
 
     if (savedArticles) {
       setIsOpen(true);
@@ -167,20 +172,39 @@ function App() {
                 item.saved = true;
               }
             })
-            setSearchResult(sortByDate(res.articles));
-            setSearchResultMain(sortByDate(res.articles).slice(0, 3));
+            localStorage.setItem('articlesData', JSON.stringify(sortByDate(res.articles)));
+            localStorage.setItem('articlesDataMain', JSON.stringify(sortByDate(res.articles).slice(0, numOfArticles)));
+            setSearchResultMain(sortByDate(res.articles).slice(0, numOfArticles));
           } else {
-            setSearchResult(sortByDate(res.articles));
-            setSearchResultMain(sortByDate(res.articles).slice(0, 3));
+            localStorage.setItem('articlesData', JSON.stringify(sortByDate(res.articles)));
+            localStorage.setItem('articlesDataMain', JSON.stringify(sortByDate(res.articles).slice(0, numOfArticles)));
+            setSearchResultMain(sortByDate(res.articles).slice(0, numOfArticles));
           }
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err);
+        setNewsSearchError(err);
+      });
   }
+
+  // проверка на сохраненные новости
+  useEffect(() => {
+    if (localStorage.articlesDataMain) {
+      setSearchWord(localStorage.searchWord);
+
+      searchResultMain.forEach(item => {
+      if (savedArticlesData.find(savedArticle => savedArticle.link === item.url)) {
+        item.saved = true;
+      }
+    })
+    }
+  }, [])
 
   // метод для добавляения новых карточек при нажатии на кнопку Показать еще
   const addMoreResults = () => {
-    setSearchResultMain([...searchResultMain, ...searchResult.slice(searchResultMain.length, searchResultMain.length + 3)]);
+    setSearchResultMain([...searchResultMain, ...JSON.parse(localStorage.getItem('articlesData')).slice(searchResultMain.length, searchResultMain.length + numOfArticles)]);
+    localStorage.setItem('articlesDataMain', JSON.stringify([...searchResultMain, ...JSON.parse(localStorage.getItem('articlesData')).slice(searchResultMain.length, searchResultMain.length + numOfArticles)]));
   }
 
   // функция открытия попапа
@@ -235,7 +259,7 @@ function App() {
               <Main open={openPopup} addResult={addResult} setSearchWord={setSearchWord} noResult={noResult} preloader={preloader}
                 searchForm={searchForm} searchResultMain={searchResultMain} searchWord={searchWord} addMoreResults={addMoreResults}
                 isLogin={isLogin} signOut={signOut} addNewsCard={addNewsCard} deleteNewsCard={deleteNewsCard}
-                getUserNewsCards={getUserNewsCards} />
+                getUserNewsCards={getUserNewsCards} newsSearchError={newsSearchError} />
             </Route>
           </Switch>
 

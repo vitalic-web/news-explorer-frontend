@@ -9,7 +9,7 @@ function SavedNewsHeader(props) {
 
     for (let i = 0; i < keywordArr.length; i++) {
       let amount = 0;
-      let keyword = keywordArr[i];
+      const keyword = keywordArr[i];
 
       keywordArr.forEach(item => {
         if (item === keyword) {
