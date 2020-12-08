@@ -53,7 +53,14 @@ function NewsCard(props) {
         </>
         :
         <div className="NewsCard__bookmark">
-          <div onClick={props.isLogin ? toggleBookmark : openLoginPopup} className={`NewsCard__bookmark-image ${click && 'NewsCard__bookmark-image_checked'} ${props.isLogin && 'NewsCard__bookmark-image_logged'} ${props.saved && 'NewsCard__bookmark-image_checked'}`} />
+          <div onClick={props.isLogin ? toggleBookmark : openLoginPopup}
+            className={
+              `NewsCard__bookmark-image
+              ${click && 'NewsCard__bookmark-image_checked'}
+              ${props.isLogin && 'NewsCard__bookmark-image_logged'}
+              ${props.saved && 'NewsCard__bookmark-image_checked'}`
+            }
+          />
           {!props.isLogin && <button className="NewsCard__bookmark-button">Войдите, чтобы сохранять статьи</button>}
         </div>
       }

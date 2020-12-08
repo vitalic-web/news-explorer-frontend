@@ -1,6 +1,6 @@
 import './Navigation.css';
 import { useHistory, Link } from 'react-router-dom';
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import logoutIcon from '../../images/Navigation__logout.svg';
 import logoutIconSavedNews from '../../images/Navigation__logout_saved-news.svg';
 import burgerMenuBlack from '../../images/burgerMenu_black.svg';
@@ -17,6 +17,21 @@ function Navigation(props) {
   const [burgerMenu, setBurgerMenu] = useState(false);
   const [burgerMenuActive, setBurgerMenuActive] = useState(false);
   const currentUser = useContext(CurrentUserContext);
+
+  // console.log(savedArticles);
+
+  // useEffect(() => {
+  //   props.setSavedArticles(savedArticles);
+  // }, [savedArticles])
+
+  // console.log(props);
+
+  // const setSavedPage = () => {
+  //   props.setSavedArticles(true);
+  // }
+  // const setMainPage = () => {
+  //   props.setSavedArticles(false);
+  // }
 
   const clickBurger = () => {
     props.burger(true);
@@ -66,12 +81,13 @@ function Navigation(props) {
         </nav>
         :
         <nav className="Navigation">
-          <Link className={`Navigation__main ${savedArticles && 'Navigation__main_saved-news'}`} to="/">Главная</Link>
+          <Link className={`Navigation__main ${savedArticles && 'Navigation__main_saved-news'}`} to="/"
+            >Главная</Link>
           {props.isLogin
             ?
             <>
               <Link className={`Navigation__saved-articles ${savedArticles && 'Navigation__saved-articles_saved-news'}`}
-                to="/saved-news">Сохраненные статьи</Link>
+                to="/saved-news" >Сохраненные статьи</Link>
               <button className={`Navigation__auth ${savedArticles && 'Navigation__auth_saved-news'}`} onClick={props.signOut}>
                 {currentUser.name}
                 <img className="Navigation__logout"

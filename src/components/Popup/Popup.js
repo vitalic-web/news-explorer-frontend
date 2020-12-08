@@ -84,6 +84,14 @@ function Popup(props) {
     }
   });
 
+  // useEffect(() => {
+  //   if (!props.login) {
+  //     setPopupWithForm(false);
+  //   }
+  // }, [props.login])
+
+  // console.log(props.isOpen);
+
   return (
     <section className={`Popup ${props.isOpen && 'Popup_active'}`}>
 

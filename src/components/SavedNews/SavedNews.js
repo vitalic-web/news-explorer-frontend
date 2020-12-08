@@ -15,6 +15,7 @@ function SavedNews(props) {
         articles_amount={props.savedArticlesData.length}
         signOut={props.signOut}
         savedArticlesData={props.savedArticlesData}
+        setSavedArticles={props.setSavedArticles}
       />
       {
         props.savedArticlesData.length > 0

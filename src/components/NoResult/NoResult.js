@@ -2,6 +2,8 @@ import './NoResult.css';
 import noResult from '../../images/NoResult.svg';
 
 function NoResult(props) {
+  console.log(props.newsSearchError);
+
   return (
     <div className="NoResult">
       <img className="NoResult__image" src={noResult} alt="no result"/>

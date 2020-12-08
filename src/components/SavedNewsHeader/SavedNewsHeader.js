@@ -32,7 +32,7 @@ function SavedNewsHeader(props) {
 
   return (
     <div className="SavedNewsHeader">
-      <Header isLogin={props.isLogin} signOut={props.signOut} />
+      <Header isLogin={props.isLogin} signOut={props.signOut} setSavedArticles={props.setSavedArticles} />
       <div className="SavedNewsHeader__text">
         <p className="SavedNewsHeader__title">Сохранённые статьи</p>
         <h1 className="SavedNewsHeader__main-title">{props.userName}, у вас {props.articles_amount} сохранённых статей</h1>
@@ -43,9 +43,33 @@ function SavedNewsHeader(props) {
             По ключевым словам: <b>{numOfKewords[0].keyword}</b>, <b>{numOfKewords[1].keyword}</b> и <b>{amountRemain}-м другим</b>
           </p>
           :
-          <p className="SavedNewsHeader__tags">
-            По ключевым словам: <b>{numOfKewords[0].keyword}</b>, <b>{numOfKewords[1].keyword}</b>, <b>{numOfKewords[2].keyword}</b>
-          </p>
+          <>
+          {
+            numOfKewords.length === 3
+            &&
+            <p className="SavedNewsHeader__tags">
+              По ключевым словам: <b>{numOfKewords[0].keyword}</b>, <b>{numOfKewords[1].keyword}</b>, <b>{numOfKewords[2].keyword}</b>
+            </p>
+          }
+
+          {
+            numOfKewords.length === 2
+            &&
+            <p className="SavedNewsHeader__tags">
+              По ключевым словам: <b>{numOfKewords[0].keyword}</b>, <b>{numOfKewords[1].keyword}</b>
+            </p>
+          }
+
+          {
+            numOfKewords.length === 1
+            &&
+            <p className="SavedNewsHeader__tags">
+              По ключевому слову: <b>{numOfKewords[0].keyword}</b>
+            </p>
+          }
+
+          </>
+
         }
       </div>
     </div>

@@ -1,6 +1,6 @@
 import './App.css';
 import { useState, useEffect } from 'react';
-import { Switch, Route, useHistory } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 import Main from '../Main/Main';
 import SavedNews from '../SavedNews/SavedNews';
 import Footer from '../Footer/Footer';
@@ -15,7 +15,7 @@ function App() {
   const [isOpen, setIsOpen] = useState(false); // открытие/закрытие попапа
   const [searchResultMain, setSearchResultMain] = useState(JSON.parse(localStorage.getItem('articlesDataMain')));
   const [searchWord, setSearchWord] = useState(''); // слово поиска
-  const [searchForm, setSearchForm] = useState(false); // видимость результатов поиска
+  const [searchForm, setSearchForm] = useState(localStorage.articlesDataMain && true); // видимость результатов поиска
   const [noResult, setNoResult] = useState(false); // нет результатов
   const [preloader, setPreloader] = useState(false); // прелоудер
   const [email, setEmail] = useState(''); // значение инпута емейл
@@ -23,14 +23,13 @@ function App() {
   const [name, setName] = useState(''); // значение инпута имя
   const [sameUser, setSameUser] = useState(false); // проверка юзера в базе
   const [currentUser, setCurrentUser] = useState({});
-  const [isLogin, setIsLogin] = useState(localStorage.isLogin);
+  const [isLogin, setIsLogin] = useState(false); //localStorage.isLogin
   const [authError, setAuthError] = useState(false);
-  const history = useHistory();
-  const savedArticles = history.location.pathname === '/saved-news';
+  const [savedArticles, setSavedArticles] = useState(false);
   const jwt = localStorage.getItem('jwt');
   const [loginError, setLoginError] = useState('');
   const [savedArticlesData, setSavedArticlesData] = useState(JSON.parse(localStorage.getItem('savedArticlesData')));
-  const [newsSearchError, setNewsSearchError] = '';
+  const [newsSearchError, setNewsSearchError] = useState('');
 
   const newsApi = new NewsApi(); // экземпляр апи по поиску новостей
   const mainApi = new MainApi({ // экземпляр главного апи
@@ -65,6 +64,7 @@ function App() {
 
         authApi.deleterAticle(deletedCard)
           .then(res => {
+            deletedCard.saved = false;
             setClick(false);
             setSavedArticlesData(savedArticlesData.filter(item => item.link !== deletedCard.link));
             localStorage.setItem('savedArticlesData', JSON.stringify(savedArticlesData.filter(item => item.link !== deletedCard.link)));
@@ -77,6 +77,8 @@ function App() {
     authApi.getSavedArticles()
       .then(res => {
         localStorage.setItem('savedArticlesData', JSON.stringify(res.data));
+        setSavedArticlesData([]);
+        setSavedArticlesData(res.data);
       })
       .catch((err) => console.log(err));
   }
@@ -127,10 +129,12 @@ function App() {
     localStorage.removeItem('isLogin');
     localStorage.removeItem('savedArticlesData');
     localStorage.removeItem('articlesDataMain');
-    localStorage.removeItem('searchWord');
+    setSavedArticlesData([]);
 
     if (savedArticles) {
       setIsOpen(true);
+      setEmail('');
+      setPassword('');
     }
   }
 
@@ -161,6 +165,7 @@ function App() {
 
         if (res.totalResults === 0) {
           setNoResult(true);
+          setNewsSearchError('Ничего не найдено');
           setSearchForm(false);
         } else {
           setNoResult(false);
@@ -175,6 +180,7 @@ function App() {
             localStorage.setItem('articlesData', JSON.stringify(sortByDate(res.articles)));
             localStorage.setItem('articlesDataMain', JSON.stringify(sortByDate(res.articles).slice(0, numOfArticles)));
             setSearchResultMain(sortByDate(res.articles).slice(0, numOfArticles));
+
           } else {
             localStorage.setItem('articlesData', JSON.stringify(sortByDate(res.articles)));
             localStorage.setItem('articlesDataMain', JSON.stringify(sortByDate(res.articles).slice(0, numOfArticles)));
@@ -184,22 +190,11 @@ function App() {
       })
       .catch((err) => {
         console.log(err);
-        setNewsSearchError(err);
+        setPreloader(false);
+        setNoResult(true);
+        setNewsSearchError('Проблема на сервере');
       });
   }
-
-  // проверка на сохраненные новости
-  useEffect(() => {
-    if (localStorage.articlesDataMain) {
-      setSearchWord(localStorage.searchWord);
-
-      searchResultMain.forEach(item => {
-      if (savedArticlesData.find(savedArticle => savedArticle.link === item.url)) {
-        item.saved = true;
-      }
-    })
-    }
-  }, [])
 
   // метод для добавляения новых карточек при нажатии на кнопку Показать еще
   const addMoreResults = () => {
@@ -207,9 +202,43 @@ function App() {
     localStorage.setItem('articlesDataMain', JSON.stringify([...searchResultMain, ...JSON.parse(localStorage.getItem('articlesData')).slice(searchResultMain.length, searchResultMain.length + numOfArticles)]));
   }
 
+  // проверка на сохраненные новости
+  useEffect(() => {
+    setSearchWord(localStorage.searchWord);
+
+    const localData = JSON.parse(localStorage.getItem('articlesData'));
+    const localMain = JSON.parse(localStorage.getItem('articlesDataMain'));
+
+    if (!savedArticles && isLogin) {
+
+      localData.forEach(item => {
+        if (savedArticlesData.find(savedArticle => savedArticle.link === item.url)) {
+          item.saved = true;
+        } else {
+          item.saved = false;
+        }
+      })
+
+      localStorage.setItem('articlesData', JSON.stringify(sortByDate(localData)));
+
+      localMain.forEach(item => {
+        if (savedArticlesData.find(savedArticle => savedArticle.link === item.url)) {
+          item.saved = true;
+        } else {
+          item.saved = false;
+        }
+      })
+
+      setSearchResultMain(localMain);
+    }
+
+  }, [savedArticles, savedArticlesData])
+
   // функция открытия попапа
   const openPopup = () => {
     setIsOpen(true);
+    setEmail('');
+    setPassword('');
     document.body.style.overflow = 'hidden';
   }
 
@@ -252,6 +281,7 @@ function App() {
               savedArticlesData={savedArticlesData}
               deleteNewsCardSaved={deleteNewsCard}
               openPopup={openPopup}
+              setSavedArticles={setSavedArticles}
             >
             </ProtectedRoute>
 
@@ -259,7 +289,7 @@ function App() {
               <Main open={openPopup} addResult={addResult} setSearchWord={setSearchWord} noResult={noResult} preloader={preloader}
                 searchForm={searchForm} searchResultMain={searchResultMain} searchWord={searchWord} addMoreResults={addMoreResults}
                 isLogin={isLogin} signOut={signOut} addNewsCard={addNewsCard} deleteNewsCard={deleteNewsCard}
-                getUserNewsCards={getUserNewsCards} newsSearchError={newsSearchError} />
+                getUserNewsCards={getUserNewsCards} newsSearchError={newsSearchError} setSavedArticles={setSavedArticles} />
             </Route>
           </Switch>
 
