@@ -169,7 +169,7 @@
   visibility: hidden;
 }
 
-.NewsCard__bookmark-button.NewsCard__bookmark-button_logged-in{
+.NewsCard__bookmark-button.NewsCard__bookmark-button_logged-in {
   width: 159px;
   font-size: 12px;
   line-height: 14px;
@@ -182,6 +182,9 @@
   width: auto;
   padding: 0 12px;
   outline: none;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 24px;
 }
 
 .NewsCard__bookmark-button_tagged.NewsCard__bookmark-button_tagged:hover {
@@ -197,11 +200,16 @@
 }
 
 .NewsCard__bookmark-image:hover {
-  filter: brightness(0%);
+  background-image: url(../../images/bookmark_black.svg);
   cursor: pointer;
 }
 
-.NewsCard__bookmark-image:hover + .NewsCard__bookmark-button {
+.NewsCard__bookmark-image.NewsCard__bookmark-image_logged {
+  background-image: url(../../images/bookmark_black.svg);
+  cursor: pointer;
+}
+
+.NewsCard__bookmark-image:hover+.NewsCard__bookmark-button {
   visibility: visible;
 }
 
@@ -226,6 +234,6 @@
   cursor: pointer;
 }
 
-.NewsCard__bookmark-delete-image:hover + .NewsCard__bookmark-button {
+.NewsCard__bookmark-delete-image:hover+.NewsCard__bookmark-button {
   visibility: visible;
 }

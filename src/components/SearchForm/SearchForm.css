@@ -41,12 +41,6 @@
   }
 }
 
-@-moz-document url-prefix() {
-  .SearchForm__input {
-    padding-top: 21px;
-  }
-}
-
 .SearchForm__input::placeholder {
   color:#B6BCBF;
   font-family: 'Roboto', Arial, sans-serif;
