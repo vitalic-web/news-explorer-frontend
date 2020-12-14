@@ -146,6 +146,14 @@
   outline: none;
 }
 
+@-moz-document url-prefix() {
+  .Popup__input {
+    border: none;
+    outline: none;
+    border-bottom: 1px solid rgba(00, 00, 00, .2);
+  }
+}
+
 .Popup__input::placeholder {
   font-family: Inter;
   font-weight: normal;
