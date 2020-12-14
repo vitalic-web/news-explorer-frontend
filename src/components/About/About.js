@@ -15,7 +15,7 @@ function About() {
         <p className="About__description-text">
           Данный сайт представляет собой дипломный проект Яндекс.Практикума.
           <br></br>
-          При разработке использованы следующие технологии: HTML, CSS, JavaScript, React, Node.js, Express, REST API.
+          При разработке использованы следующие технологии: HTML, CSS, JavaScript, React, Node.js, Express, Mongo DB, REST API.
         </p>
       </div>
     </div>
